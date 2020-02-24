@@ -28,6 +28,12 @@
   color: #61dafb;
 }
 
+.no-break {
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+}
+
 .bp3-timepicker .bp3-timepicker-input-row {
   line-height: 0px;
 }
