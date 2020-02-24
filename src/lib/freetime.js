@@ -59,7 +59,6 @@ const invertSegments = ({ segments, min, max }) => {
 export const getFreetime = ({ segments, start, end }) => {
   const reduced = reduceSegments({ segments, min: start, max: end });
   return invertSegments({ segments: reduced, min: start, max: end });
-  // return reduced;
 };
 
 export const mergeCalendars = calendars => {

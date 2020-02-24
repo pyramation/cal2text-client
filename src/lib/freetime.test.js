@@ -5,7 +5,7 @@ const apiResponse = {
   timeMin: "2020-02-24T16:57:01.000Z",
   timeMax: "2020-02-25T16:57:38.000Z",
   calendars: {
-    "mkbunday@gmail.com": {
+    "xxxxxxxx@gmail.com": {
       busy: [
         {
           start: "2020-02-24T16:57:01Z",
@@ -17,7 +17,7 @@ const apiResponse = {
         }
       ]
     },
-    "stedmanhood@gmail.com": {
+    "yyyyyyyyyyy@gmail.com": {
       busy: [
         {
           start: "2020-02-24T17:00:00Z",
