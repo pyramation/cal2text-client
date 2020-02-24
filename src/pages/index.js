@@ -1,7 +1,7 @@
 import React from "react";
 
-import { DateInput, TimePicker } from "@blueprintjs/datetime";
-import { Button, Icon, NumericInput } from "@blueprintjs/core";
+import { TimePicker } from "@blueprintjs/datetime";
+import { Button, NumericInput } from "@blueprintjs/core";
 
 import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
@@ -10,7 +10,7 @@ const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
     console.log(_valueAsNumber);
     var week = document.querySelector('#week');
     if (_valueAsNumber > 1){
-        if (week.innerHTML != " weeks."){
+        if (week.innerHTML !== " weeks."){
             week.classList.add('fade');
             setTimeout(function(){
                 week.innerHTML = " weeks.";
@@ -19,7 +19,7 @@ const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
             },500);
         }
     } else {
-        if (week.innerHTML != " week."){
+        if (week.innerHTML !== " week."){
             week.classList.add('fade');
             setTimeout(function(){
                 week.innerHTML = " week.";
@@ -28,20 +28,6 @@ const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
             },500);
         }
     }
-};
-
-const jsDateFormatterStart = {
-  // note that the native implementation of Date functions differs between browsers
-  formatDate: date => date.toLocaleDateString(),
-  parseDate: str => new Date(str),
-  placeholder: "Start Date"
-};
-
-const jsDateFormatterEnd = {
-  // note that the native implementation of Date functions differs between browsers
-  formatDate: date => date.toLocaleDateString(),
-  parseDate: str => new Date(str),
-  placeholder: "End Date"
 };
 
 const jsTimeFormatterStart = {
