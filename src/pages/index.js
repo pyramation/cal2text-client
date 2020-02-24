@@ -1,7 +1,10 @@
 import React from "react";
 
 import { DateInput, TimePicker } from "@blueprintjs/datetime";
+import { Button, Icon } from "@blueprintjs/core";
+
 import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
+
 
 const jsDateFormatter = {
   // note that the native implementation of Date functions differs between browsers
@@ -11,7 +14,8 @@ const jsDateFormatter = {
 };
 
 const jsTimeFormatter = {
-  useAmPm: "True"
+  useAmPm: "True",
+  showArrowButtons: "True"
 };
 
 const Index = () => {
@@ -25,6 +29,8 @@ const Index = () => {
       <TimePicker {...jsTimeFormatter} />
       <div>and</div>
       <TimePicker {...jsTimeFormatter}/>
+
+      <Button icon="user" text="Get Times" />
     </header>
   );
 };

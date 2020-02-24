@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+
 }
 
 .App-logo {
@@ -26,6 +26,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.bp3-timepicker .bp3-timepicker-input-row {
+  line-height: 0px;
 }
 
 @keyframes App-logo-spin {
