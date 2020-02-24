@@ -1,20 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import "@blueprintjs/core/lib/css/blueprint.css"
-import "@blueprintjs/icons/lib/css/blueprint-icons.css"
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+import "./App.css";
 
-import {
-  ButtonGroupExample
-} from './components/example';
+import Index from "./pages/index";
+import Cal2Text from "./pages/cal2text";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <ButtonGroupExample />
-      </header>
+      <Router>
+        <Switch>
+          <Route path="/cal2text" component={Cal2Text} />
+          <Route render={() => <Index />} />
+        </Switch>
+      </Router>
     </div>
   );
 }
