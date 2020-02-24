@@ -5,6 +5,31 @@ import { Button, Icon, NumericInput } from "@blueprintjs/core";
 
 import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
+
+const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
+    console.log(_valueAsNumber);
+    var week = document.querySelector('#week');
+    if (_valueAsNumber > 1){
+        if (week.innerHTML != " weeks."){
+            week.classList.add('fade');
+            setTimeout(function(){
+                week.innerHTML = " weeks.";
+                week.classList.add('reveal');
+                week.classList.remove('reveal','fade');
+            },500);
+        }
+    } else {
+        if (week.innerHTML != " week."){
+            week.classList.add('fade');
+            setTimeout(function(){
+                week.innerHTML = " week.";
+                week.classList.add('reveal');
+                week.classList.remove('reveal','fade');
+            },500);
+        }
+    }
+};
+
 const jsDateFormatterStart = {
   // note that the native implementation of Date functions differs between browsers
   formatDate: date => date.toLocaleDateString(),
@@ -35,6 +60,7 @@ const jsNumericInputFormatter={
     allowNumericCharactersOnly: "True",
     min: 1,
     value: 1,
+    onValueChange: handleWeekValueChange
 }
 
 const Index = () => {
@@ -49,7 +75,7 @@ const Index = () => {
         <div class="no-break">
             <div> for the next </div>
             <NumericInput {...jsNumericInputFormatter} />
-            <div> weeks.</div>
+            <div id="week"> week.</div>
         </div>
         <div class="no-break">
             <Button icon="user" text="Get Times" />

@@ -56,5 +56,17 @@
 
 .bp3-control-group {
    margin-left: 1rem;
-  margin-right: 1rem;
+   margin-right: 1rem;
 }
+
+#week{
+  -webkit-transition: opacity .5s ease-in-out;
+   -moz-transition: opacity .5s ease-in-out;
+   -ms-transition: opacity .5s ease-in-out;
+   -o-transition: opacity .5s ease-in-out;
+   transition: opacity .5s ease-in-out;
+}
+
+
+.fade { opacity: 0; }
+.reveal { opacity: 1; }
