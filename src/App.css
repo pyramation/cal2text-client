@@ -1,7 +1,3 @@
-.App {
-
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -18,7 +14,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding-left: calc(50% - 200px);
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -31,7 +27,9 @@
 .no-break {
   display: flex;
   flex-direction: row;
-  vertical-align: middle;
+  line-height: 0px;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .bp3-timepicker .bp3-timepicker-input-row {
@@ -46,3 +44,19 @@
     transform: rotate(360deg);
   }
 }
+
+.vertical-center, .bp3-control-group{
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#week{
+  -webkit-transition: opacity .5s ease-in-out;
+   -moz-transition: opacity .5s ease-in-out;
+   -ms-transition: opacity .5s ease-in-out;
+   -o-transition: opacity .5s ease-in-out;
+   transition: opacity .5s ease-in-out;
+}
+
+.fade { opacity: 0; }
+.reveal { opacity: 1; }

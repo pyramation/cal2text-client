@@ -1,46 +1,71 @@
 import React from "react";
 
-import { DateInput, TimePicker } from "@blueprintjs/datetime";
-import { Button, Icon } from "@blueprintjs/core";
+import { TimePicker } from "@blueprintjs/datetime";
+import { Button, NumericInput } from "@blueprintjs/core";
 
 import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
 
-const jsDateFormatterStart = {
-  // note that the native implementation of Date functions differs between browsers
-  formatDate: date => date.toLocaleDateString(),
-  parseDate: str => new Date(str),
-  placeholder: "Start Date"
+const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
+    console.log(_valueAsNumber);
+    var week = document.querySelector('#week');
+    if (_valueAsNumber > 1){
+        if (week.innerHTML !== " weeks."){
+            week.classList.add('fade');
+            setTimeout(function(){
+                week.innerHTML = " weeks.";
+                week.classList.add('reveal');
+                week.classList.remove('reveal','fade');
+            },500);
+        }
+    } else {
+        if (week.innerHTML !== " week."){
+            week.classList.add('fade');
+            setTimeout(function(){
+                week.innerHTML = " week.";
+                week.classList.add('reveal');
+                week.classList.remove('reveal','fade');
+            },500);
+        }
+    }
 };
 
-const jsDateFormatterEnd = {
-  // note that the native implementation of Date functions differs between browsers
-  formatDate: date => date.toLocaleDateString(),
-  parseDate: str => new Date(str),
-  placeholder: "End Date"
+const jsTimeFormatterStart = {
+    useAmPm: "True",
+    showArrowButtons: "True",
+    defaultValue: new Date(2020, 5, 5, 9)
 };
 
-const jsTimeFormatter = {
+const jsTimeFormatterEnd = {
   useAmPm: "True",
-  showArrowButtons: "True"
+  showArrowButtons: "True",
+  defaultValue: new Date(2020, 5, 5, 17, 0)
 };
+
+const jsNumericInputFormatter={
+    allowNumericCharactersOnly: "True",
+    min: 1,
+    value: 1,
+    onValueChange: handleWeekValueChange
+}
 
 const Index = () => {
   return (
     <header className="App-header">
-        <div>Pick a date between</div>
+        <div>Find my free time between</div>
         <div class="no-break">
-            <DateInput {...jsDateFormatterStart} />
-            <div> to </div>
-            <DateInput {...jsDateFormatterEnd} />
-        </div>
-        <div>between</div>
-        <div class="no-break">
-            <TimePicker {...jsTimeFormatter} />
+            <TimePicker {...jsTimeFormatterStart} />
             <div class="vertical-center">and</div>
-            <TimePicker {...jsTimeFormatter}/>
+            <TimePicker {...jsTimeFormatterEnd}/>
         </div>
-      <Button icon="user" text="Get Times" />
+        <div class="no-break">
+            <div> for the next </div>
+            <NumericInput {...jsNumericInputFormatter} />
+            <div id="week"> week.</div>
+        </div>
+        <div class="no-break">
+            <Button icon="user" text="Get Times" />
+        </div>
     </header>
 
   );
