@@ -31,7 +31,9 @@
 .no-break {
   display: flex;
   flex-direction: row;
-  vertical-align: middle;
+  line-height: 0px;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .bp3-timepicker .bp3-timepicker-input-row {
@@ -45,4 +47,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.vertical-center {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.bp3-control-group {
+   margin-left: 1rem;
+  margin-right: 1rem;
 }
