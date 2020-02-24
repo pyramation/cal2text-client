@@ -63,7 +63,7 @@ const Index = () => {
         <div id="week"> week.</div>
       </div>
       <div class="no-break">
-        <Button icon="user" text="Get Times" />
+        <Button icon="timeline-events" text="Get Times" />
       </div>
     </header>
   );
