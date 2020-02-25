@@ -4,7 +4,7 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "./App.css";
 
-import Index from "./pages/index";
+import Index from "./pages/login";
 import Cal2Text from "./pages/cal2text";
 
 function App() {
