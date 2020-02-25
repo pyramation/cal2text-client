@@ -3,7 +3,7 @@ import { Button, MenuItem, Icon } from "@blueprintjs/core";
 import { MultiSelect } from "@blueprintjs/select";
 import calendarIcon from '../assets/cal.png';
 
-export const SelectCalendars = ({ calendars, selected, setSelected }) => {
+export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosingCalendars }) => {
   const isSelected = item => selected.includes(item);
 
   const renderItem = (item, { modifiers, handleClick }) => {
@@ -47,8 +47,8 @@ export const SelectCalendars = ({ calendars, selected, setSelected }) => {
     calendars.length > 0 ? (
       <Button icon="cross" minimal={true} onClick={handleClear} />
     ) : (
-      undefined
-    );
+        undefined
+      );
 
   // TODO wtf does this even do
   const getTagProps = (_value, index) => {
@@ -63,20 +63,24 @@ export const SelectCalendars = ({ calendars, selected, setSelected }) => {
 
   return (
     <>
-  <h1>Choose all calendars you need to coordinate with</h1>
-   <br />
-   <img src={calendarIcon} />
-   <br />
-    <MultiSelect
-    
-      itemRenderer={renderItem}
-      items={calendars}
-      noResults={<MenuItem disabled={true} text="No results." />}
-      onItemSelect={handleCalendarSelect}
-      tagRenderer={renderTag}
-      selectedItems={selected}
-      tagInputProps={tagInputProps}
-    />
+      <div className="calendar-select">
+        <h1>Choose all calendars you need to coordinate with</h1>
+        <br />
+        <img src={calendarIcon} alt="calendar" />
+        <br />
+        <MultiSelect
+
+          itemRenderer={renderItem}
+          items={calendars}
+          noResults={<MenuItem disabled={true} text="No results." />}
+          onItemSelect={handleCalendarSelect}
+          tagRenderer={renderTag}
+          selectedItems={selected}
+          tagInputProps={tagInputProps}
+        />
+        <Button onClick={doneChoosingCalendars} intent={'primary'} large>Done</Button>
+      </div>
+
     </>
   );
 };
