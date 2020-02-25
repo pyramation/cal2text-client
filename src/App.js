@@ -9,6 +9,7 @@ import "./App.css";
 
 import Index from "./pages/index";
 import { Privacy } from "./pages/privacy";
+import { Terms } from "./pages/terms";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/privacy" component={Privacy} />
+          <Route path="/terms" component={Terms} />
           <Route render={() => <Index />} />
         </Switch>
       </Router>
