@@ -173,13 +173,6 @@ const Index = () => {
   }
 
   if (!eventsFetched) {
-    // TODO pass list of calendars and batch
-    // listEvents({ calendarId: calendarsToQuery[0].id }).then(res => {
-    //   setEvents(res);
-    //   setEventsFetched(true);
-    // });
-    const today = new Date();
-    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
     getEachDayBusyTimes({
       startHour: dayStartTime.getHours(),
       endHour: dayEndTime.getHours(),
@@ -208,9 +201,6 @@ const Index = () => {
       </Layout>
     );
   }
-
-  const today = new Date();
-  const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
   return (
     <Layout>
