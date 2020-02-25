@@ -72,11 +72,6 @@ const ResultsDisplay = ({
   return !resultsFetching && results ? (
     <>
       <AutofocusTextarea results={results} timezone={timezone} />
-      <div className="calendar-chooser">
-        <Button onClick={notFinishedChoosingCalendars}>
-          Re-choose Calendars
-        </Button>
-      </div>
     </>
   ) : (
     <>{resultsFetching ? <h1>Fetching events...</h1> : null}</>

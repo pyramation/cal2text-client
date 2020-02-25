@@ -14,6 +14,7 @@ import {
 import { SelectCalendars } from "../components/SelectCalendars";
 
 import Layout from "../components/Layout";
+import Landing from "../components/Landing";
 import MainForm from "../components/MainForm";
 
 const Index = () => {
@@ -35,7 +36,6 @@ const Index = () => {
   const [resultsFetching, setResultsFetching] = useState(false);
 
   const signUserOut = () => {
-    console.log('signOut')
     signOut();
 
     setSignedIn(false);
@@ -71,21 +71,33 @@ const Index = () => {
     setCalendarsChosen(false);
   };
 
+  const PageLayout = ({ children }) => {
+    return (
+      <Layout
+          signOut={signUserOut}
+          signIn={signIn}
+          signedIn={signedIn}
+          setCalendarsChosen={setCalendarsChosen}
+          calendarsChosen={calendarsChosen}
+          >
+        {children}
+      </Layout>);
+  }
+
   if (!apiReady) {
     loadApi({ setSignedIn, setApiReady });
     return (
-      <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
+      <PageLayout>
         <div>Loading API...</div>
-      </Layout>
+      </PageLayout>
     );
   }
 
   if (!signedIn) {
     return (
-      <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
-        <h1>Not signed in... go for it!</h1>
-        <Button onClick={signIn}>Authorize</Button>
-      </Layout>
+      <PageLayout>
+        <Landing signIn={signIn} />
+      </PageLayout>
     );
   }
 
@@ -96,27 +108,27 @@ const Index = () => {
       setCalendarsFetched(true);
     });
     return (
-      <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
+      <PageLayout>
         <h1>fetching calendars...</h1>
-      </Layout>
+      </PageLayout>
     );
   }
 
   if (!calendarsChosen) {
     return (
-      <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
+      <PageLayout>
         <SelectCalendars
           calendars={calendars}
           selected={calendarsToQuery}
           setSelected={setCalendarsToQuery}
           doneChoosingCalendars={doneChoosingCalendars}
         />
-      </Layout>
+      </PageLayout>
     );
   }
 
   return (
-    <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
+    <PageLayout>
       <MainForm
         dayStartTime={dayStartTime}
         setDayStartTime={setDayStartTime}
@@ -131,7 +143,7 @@ const Index = () => {
         getFreeSummary={getFreeSummary}
         notFinishedChoosingCalendars={notFinishedChoosingCalendars}
       />
-    </Layout>
+    </PageLayout>
   );
 };
 

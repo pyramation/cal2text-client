@@ -39,7 +39,7 @@ const MainForm = ({
 }) => {
 
     return (
-        <>
+        <div className="calendar-mainform">
             <div className="word">Find my free time between</div>
             <div className="timespan-chooser">
                 <TimePicker
@@ -91,7 +91,7 @@ const MainForm = ({
                 timezone={timezone}
                 notFinishedChoosingCalendars={notFinishedChoosingCalendars}
             />
-        </>
+        </div>
     );
 };
 

@@ -62,25 +62,22 @@ export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosing
   };
 
   return (
-    <>
-      <div className="calendar-select">
-        <h1>Choose all calendars you need to coordinate with</h1>
-        <br />
-        <img src={calendarIcon} alt="calendar" />
-        <br />
-        <MultiSelect
+    <div className="calendar-select">
+      <h1>Choose all calendars you need to sync</h1>
+      <br />
+      <img src={calendarIcon} alt="calendar" />
+      <br />
+      <MultiSelect
 
-          itemRenderer={renderItem}
-          items={calendars}
-          noResults={<MenuItem disabled={true} text="No results." />}
-          onItemSelect={handleCalendarSelect}
-          tagRenderer={renderTag}
-          selectedItems={selected}
-          tagInputProps={tagInputProps}
-        />
-        <Button onClick={doneChoosingCalendars} intent={'primary'} large>Done</Button>
-      </div>
-
-    </>
+        itemRenderer={renderItem}
+        items={calendars}
+        noResults={<MenuItem disabled={true} text="No results." />}
+        onItemSelect={handleCalendarSelect}
+        tagRenderer={renderTag}
+        selectedItems={selected}
+        tagInputProps={tagInputProps}
+      />
+      <Button onClick={doneChoosingCalendars} intent={'primary'} large>Done</Button>
+    </div>
   );
 };

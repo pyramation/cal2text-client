@@ -6,6 +6,29 @@
 
 .calendar-select {
   margin-top: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-mainform {
+  margin-top: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-landing {
+  margin-top: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-landing h1, 
+.calendar-landing h2 {
+  max-width: 520px;
+  text-align: center;
 }
 
 .calendar-chooser {
@@ -50,4 +73,16 @@
   width: 33em;
   font-size: 1.5em;
   height: 10em;
+}
+
+
+.bp3-button.bp3-intent-primary {
+  background-color: #00B0FF;
+  border-radius: 18px;
+  border: 0;
+  box-shadow: none !important;
+}
+
+.bp3-button.bp3-intent-primary:hover {
+  background-color: rgb(8, 139, 187);
 }
