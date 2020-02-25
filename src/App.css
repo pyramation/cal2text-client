@@ -75,6 +75,10 @@
   height: 10em;
 }
 
+/* elements */
+.bp3-tag {
+  background-color: #00B0FF;
+}
 
 .bp3-button.bp3-intent-primary {
   background-color: #00B0FF;

@@ -63,9 +63,9 @@ export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosing
 
   return (
     <div className="calendar-select">
-      <h1>Choose all calendars you need to sync</h1>
-      <br />
       <img src={calendarIcon} alt="calendar" />
+      <br />
+      <h1>Choose all calendars you need to sync</h1>
       <br />
       <MultiSelect
 
@@ -77,6 +77,7 @@ export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosing
         selectedItems={selected}
         tagInputProps={tagInputProps}
       />
+      <br />
       <Button onClick={doneChoosingCalendars} intent={'primary'} large>Done</Button>
     </div>
   );

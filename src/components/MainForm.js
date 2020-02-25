@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TimePicker } from "@blueprintjs/datetime";
 import { Button, NumericInput, Position } from "@blueprintjs/core";
 import { TimezonePicker, TimezoneDisplayFormat } from "@blueprintjs/timezone";
@@ -61,7 +61,7 @@ const MainForm = ({
                     value={daysToGet}
                     onValueChange={setDaysToGet}
                 />
-                <div id="week" className="word">
+                <div className="word">
                     {daysToGet > 1 ? "days" : "day"}
                 </div>
             </div>
