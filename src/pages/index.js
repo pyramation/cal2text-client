@@ -70,6 +70,7 @@ const Index = () => {
   };
 
   const getFreeSummary = () => {
+    setResultsFetching(true);
     getDaysFreeSummaryText({
       startHour: dayStartTime.getHours(),
       endHour: dayEndTime.getHours(),
@@ -78,6 +79,7 @@ const Index = () => {
       timezone
     }).then(result => {
       setResults(result);
+      setResultsFetching(false);
     });
   };
 

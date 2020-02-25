@@ -38,17 +38,40 @@ const getText = (results, timezone) => {
   );
 };
 
+class AutofocusTextarea extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("trying to focus");
+    this._input.focus();
+  }
+
+  render() {
+    const { results, timezone } = this.props;
+    return (
+      <textarea
+        ref={c => (this._input = c)}
+        className="results-text"
+        autoFocus
+        onFocus={handleFocus}
+      >
+        {getText(results, timezone)}
+      </textarea>
+    );
+  }
+}
+
 const ResultsDisplay = ({
   results,
   resultsFetching,
   timezone,
   notFinishedChoosingCalendars
 }) => {
-  return results ? (
+  return !resultsFetching && results ? (
     <>
-      <textarea className="results-text" autofocus="true" onFocus={handleFocus}>
-        {getText(results, timezone)}
-      </textarea>
+      <AutofocusTextarea results={results} timezone={timezone} />
       <div className="calendar-chooser">
         <Button onClick={notFinishedChoosingCalendars}>
           Re-choose Calendars
