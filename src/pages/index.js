@@ -2,9 +2,6 @@
 import React, { useState } from "react";
 import { TimePicker } from "@blueprintjs/datetime";
 import { Button, NumericInput } from "@blueprintjs/core";
-import {
-  Header
-} from '../components/Header'
 
 import {
   signIn,
@@ -78,10 +75,6 @@ const Index = () => {
   const notFinishedChoosingCalendars = () => {
     setCalendarsChosen(false);
   }
-
-  // return (
-  //   <Header />
-  // )
 
   if (!apiReady) {
     loadApi({ setSignedIn, setApiReady })
