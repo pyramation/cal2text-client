@@ -137,6 +137,18 @@ h2 {
   }
 }
 
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.footer-links {
+  margin-right: 1em;
+}
+
 @media only screen and (max-width: 600px) {
   .timespan-chooser {
     flex-direction: column;

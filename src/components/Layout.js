@@ -17,9 +17,13 @@ const Layout = ({
         signedIn={signedIn}
         setCalendarsChosen={setCalendarsChosen}
         calendarsChosen={calendarsChosen}
-
       />
       <div className="app-body">{children}</div>
+      <div className="footer">
+        <a className="footer-links" href="/privacy">
+          Privacy Policy
+        </a>
+      </div>
     </div>
   );
 };
