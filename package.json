@@ -1,5 +1,5 @@
 {
-  "name": "cal2text",
+  "name": "calendar-management",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,7 +19,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync build/ s3://calendar.management",
+    "invalidate": "aws cloudfront create-invalidation --distribution-id E3KRP74UHFSWA2 --paths \"/*\"",
+    "deploy-all": "npm run build && npm run deploy && npm run invalidate"
+
   },
   "eslintConfig": {
     "extends": "react-app"
