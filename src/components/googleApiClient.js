@@ -77,13 +77,6 @@ function handleAuthClick(event) {
 }
 
 /**
- *  Sign out the user upon button click.
- */
-function handleSignoutClick(event) {
-  window.gapi.auth2.getAuthInstance().signOut();
-}
-
-/**
  * Print the summary and start datetime/date of the next ten events in
  * the authorized user's calendar. If no events are found an
  * appropriate message is printed.
@@ -104,24 +97,6 @@ function listUpcomingEvents() {
     });
 }
 
-class GoogleApiClient extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    handleClientLoad();
-  }
-
-  handleAuthClick = () => {
-    handleAuthClick();
-  };
-
-  render() {
-    return <button onClick={this.handleAuthClick}>Authorize</button>;
-  }
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -137,9 +112,6 @@ class App extends React.Component {
         initClient(() => {
           this.setState({ gapiReady: true });
         });
-        // window.gapi.client.load("auth", "v2", () => {
-        //   this.setState({ gapiReady: true });
-        // });
       });
     };
 
