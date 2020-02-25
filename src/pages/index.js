@@ -87,7 +87,7 @@ const Index = () => {
   const Layout = ({ children }) => {
     return (
       <>
-      <Header signOut={signUserOut} />
+      <Header signOut={signUserOut} signIn={signIn} signedIn={signedIn} />
       <div className="App-header">
         {children}
       </div>
