@@ -1,5 +1,9 @@
+import ordinal from "ordinal";
+
 import { sortBy, flatten, map, chunk } from "lodash";
 import { DateTime } from "luxon";
+
+import { getBusyTimes } from "./google";
 
 // min, max
 // start, end
@@ -31,10 +35,10 @@ const reduceSegments = ({ segments, min, max }) => {
   }, []);
 };
 
-const strMax = (a, b) => {
+export const strMax = (a, b) => {
   return a > b ? a : b;
 };
-const strMin = (a, b) => {
+export const strMin = (a, b) => {
   return a < b ? a : b;
 };
 
@@ -132,6 +136,41 @@ export const flattenSegments = segments => {
   return flattened;
 };
 
+export const getDaysStartEnd = ({ startHour, endHour, days }) => {
+  let now;
+  if (new Date().getHours() < endHour) {
+    now = DateTime.local().set({ minute: 0, second: 0, millisecond: 0 });
+  } else {
+    now = DateTime.local()
+      .plus({ days: 1 })
+      .set({ hour: startHour, minute: 0, second: 0, millisecond: 0 });
+  }
+  const dayStartEnds = [
+    {
+      start: now.toUTC().toISO(),
+      end: now
+        .set({ hour: endHour })
+        .toUTC()
+        .toISO()
+    }
+  ];
+  for (let i = 1; i < days; i++) {
+    dayStartEnds.push({
+      start: now
+        .plus({ days: i })
+        .set({ hour: startHour })
+        .toUTC()
+        .toISO(),
+      end: now
+        .plus({ days: i })
+        .set({ hour: endHour })
+        .toUTC()
+        .toISO()
+    });
+  }
+  return dayStartEnds;
+};
+
 export const timeToShortEnglish = (timeString, timezoneString) => {
   const date = DateTime.fromISO(timeString).setZone(timezoneString);
   // const date = new Date(timestring);
@@ -165,4 +204,48 @@ export const apiResponseToFree = (apiResponse, start, end, timezoneString) => {
     }),
     timezoneString
   );
+};
+
+export const getEachDayBusyTimes = ({
+  startHour,
+  endHour,
+  calendarIds,
+  days
+}) => {
+  const daysStartEnd = getDaysStartEnd({ startHour, endHour, days });
+
+  return Promise.all(
+    daysStartEnd.map(({ start, end }) => {
+      return getBusyTimes({
+        timeMin: start,
+        timeMax: end,
+        calendarIds
+      }).then(({ result }) => ({ result, start, end }));
+    })
+  );
+};
+
+export const getDaysFreeSummaryText = ({
+  startHour,
+  endHour,
+  days,
+  calendarIds,
+  timezone
+}) => {
+  return getEachDayBusyTimes({
+    startHour: Math.min(startHour, endHour),
+    endHour: Math.max(startHour, endHour),
+    days,
+    calendarIds
+  }).then(dayResults => {
+    const result = dayResults.map(({ result: dayResult, start, end }) => {
+      const dayFreeTime = apiResponseToFree(dayResult, start, end, timezone);
+
+      const day = DateTime.fromISO(start);
+      const dayName = day.weekdayShort;
+      const monthDay = day.day;
+      return `${dayName} ${ordinal(monthDay)}: ${dayFreeTime}`;
+    });
+    return result;
+  });
 };
