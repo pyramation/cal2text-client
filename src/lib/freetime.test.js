@@ -1,4 +1,9 @@
-import { flattenSegments, getFreetime, mergeCalendars } from "./freetime";
+import {
+  flattenSegments,
+  getFreetime,
+  mergeCalendars,
+  timeToShortEnglish
+} from "./freetime";
 
 const apiResponse = {
   kind: "calendar#freeBusy",
@@ -174,7 +179,8 @@ test("freetime", () => {
 });
 
 test("timeToShortEnglish", () => {
-  expect();
+  expect(timeToShortEnglish("2020-02-24T17:30:00Z")).toEqual("5:30pm");
+  expect(timeToShortEnglish("2020-02-24T21:00:00Z")).toEqual("9pm");
 });
 
 test("freeToEnglish", () => {

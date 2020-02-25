@@ -121,6 +121,14 @@ export const apiResponseToFree = (apiResponse, start, end) => {
 
 export const timeToShortEnglish = timestring => {
   const date = new Date(timestring);
+  const hour = date.getHours() % 12;
+  const hourDisplay = hour === 0 ? "12" : `${hour}`;
+  const isPm = date.getHours() >= 12;
+  const amPmDisplay = isPm ? "pm" : "am";
+  const minutes = date.getMinutes();
+  const minutesDisplay = minutes === 0 ? "" : `:${minutes}`;
+
+  return `${hourDisplay}${minutesDisplay}${amPmDisplay}`;
 };
 
 export const freeToEnglish = segments => {
