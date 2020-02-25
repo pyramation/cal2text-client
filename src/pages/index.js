@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { TimePicker } from "@blueprintjs/datetime";
 import { Button, NumericInput } from "@blueprintjs/core";
@@ -8,18 +7,21 @@ import {
   signOut,
   listEvents,
   listCalendars,
-  loadApi
-} from '../lib/google';
+  loadApi,
+  getBusyTimes
+} from "../lib/google";
 
-import { SelectCalendars } from '../components/SelectCalendars';
-import { Header } from '../components/Header';
+import { apiResponseToFree } from "../lib/freetime";
+
+import { SelectCalendars } from "../components/SelectCalendars";
+import { Header } from "../components/Header";
 
 const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
   var week = document.querySelector("#week");
   if (_valueAsNumber > 1) {
     if (week.innerHTML !== " weeks.") {
       week.classList.add("fade");
-      setTimeout(function () {
+      setTimeout(function() {
         week.innerHTML = " weeks.";
         week.classList.add("reveal");
         week.classList.remove("reveal", "fade");
@@ -28,7 +30,7 @@ const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
   } else {
     if (week.innerHTML !== " week.") {
       week.classList.add("fade");
-      setTimeout(function () {
+      setTimeout(function() {
         week.innerHTML = " week.";
         week.classList.add("reveal");
         week.classList.remove("reveal", "fade");
@@ -74,41 +76,39 @@ const Index = () => {
 
     setSignedIn(false);
     setGetTimes(false);
-    
+
     setCalendars([]);
     setCalendarsToQuery([]);
     setCalendarsFetched(false);
     setCalendarsChosen(false);
 
-    setEventsFetched(false)
-    setEvents([])
-  }
+    setEventsFetched(false);
+    setEvents([]);
+  };
 
   const Layout = ({ children }) => {
     return (
       <>
-      <Header signOut={signUserOut} signIn={signIn} signedIn={signedIn} />
-      <div className="App-header">
-        {children}
-      </div>
+        <Header signOut={signUserOut} signIn={signIn} signedIn={signedIn} />
+        <div className="App-header">{children}</div>
       </>
     );
-  }
+  };
 
   const doneChoosingCalendars = () => {
     setCalendarsChosen(true);
-  }
+  };
   const notFinishedChoosingCalendars = () => {
     setCalendarsChosen(false);
-  }
+  };
 
   if (!apiReady) {
-    loadApi({ setSignedIn, setApiReady })
+    loadApi({ setSignedIn, setApiReady });
     return (
       <Layout>
         <div>Loading API...</div>
       </Layout>
-    )
+    );
   }
 
   if (!signedIn) {
@@ -117,7 +117,7 @@ const Index = () => {
         <h1>Not signed in...go for it!</h1>
         <Button onClick={signIn}>Authorize</Button>
       </Layout>
-    )
+    );
   }
 
   if (!calendarsFetched) {
@@ -129,19 +129,23 @@ const Index = () => {
     return (
       <Layout>
         <h1>fetching calendars...</h1>
-      </Layout>);
+      </Layout>
+    );
   }
-
 
   if (!calendarsChosen) {
     return (
       <Layout>
         <div className="no-break">
-          <SelectCalendars calendars={calendars} selected={calendarsToQuery} setSelected={setCalendarsToQuery} />
+          <SelectCalendars
+            calendars={calendars}
+            selected={calendarsToQuery}
+            setSelected={setCalendarsToQuery}
+          />
           <Button onClick={doneChoosingCalendars}>Done</Button>
         </div>
       </Layout>
-    )
+    );
   }
 
   if (!getTimes) {
@@ -159,38 +163,58 @@ const Index = () => {
           <div id="week"> week.</div>
         </div>
         <div className="no-break">
-          <Button onClick={() => setGetTimes(true)} icon="timeline-events" text="Get Times" />
+          <Button
+            onClick={() => setGetTimes(true)}
+            icon="timeline-events"
+            text="Get Times"
+          />
         </div>
         <div className="no-break">
-          <Button onClick={notFinishedChoosingCalendars} >Choose Calendars</Button>
+          <Button onClick={notFinishedChoosingCalendars}>
+            Choose Calendars
+          </Button>
         </div>
       </Layout>
     );
   }
 
-
   if (!eventsFetched) {
     // TODO pass list of calendars and batch
-    listEvents({calendarId: calendarsToQuery[0].id}).then(res => {
-      setEvents(res);
+    // listEvents({ calendarId: calendarsToQuery[0].id }).then(res => {
+    //   setEvents(res);
+    //   setEventsFetched(true);
+    // });
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    getBusyTimes({
+      timeMin: today.toISOString(),
+      timeMax: nextWeek.toISOString(),
+      calendarIds: calendarsToQuery.map(c => c.id)
+    }).then(({ result }) => {
+      setEvents(result);
       setEventsFetched(true);
+      console.log(result);
     });
     return (
       <Layout>
         <h1>fetching events...</h1>
-      </Layout>);
+      </Layout>
+    );
   }
+
+  const today = new Date();
+  const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
   return (
     <Layout>
       <div>Final Result: </div>
       <pre>
-        {JSON.stringify(events, null, 2)}
+        {JSON.stringify(
+          apiResponseToFree(events, today.toISOString(), nextWeek.toISOString)
+        )}
       </pre>
     </Layout>
-  )
-
-
+  );
 };
 
 export default Index;

@@ -12,9 +12,9 @@ const DISCOVERY_DOCS = [
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 export function initClient({ setSignedIn, setApiReady }) {
-  const updateSigninStatus = (isSignedIn) => {
+  const updateSigninStatus = isSignedIn => {
     setSignedIn(isSignedIn);
-  }
+  };
 
   window.gapi.client
     .init({
@@ -37,21 +37,25 @@ export function initClient({ setSignedIn, setApiReady }) {
 
         setApiReady(true);
       },
-      function (error) {
+      function(error) {
         console.log(error);
       }
     );
 }
 
-export const signIn = (event) => {
+export const signIn = event => {
   window.gapi.auth2.getAuthInstance().signIn();
-}
+};
 
-export const signOut = (event) => {
+export const signOut = event => {
   window.gapi.auth2.getAuthInstance().signOut();
-}
+};
 
-export const listEvents = ({ calendarId = "primary", timeMin = new Date().toISOString(), maxResults = 10 } = {}) => {
+export const listEvents = ({
+  calendarId = "primary",
+  timeMin = new Date().toISOString(),
+  maxResults = 10
+} = {}) => {
   return window.gapi.client.calendar.events
     .list({
       calendarId,
@@ -62,6 +66,16 @@ export const listEvents = ({ calendarId = "primary", timeMin = new Date().toISOS
       orderBy: "startTime"
     })
     .then(res => res.result.items);
+};
+
+export const getBusyTimes = ({ timeMin, timeMax, calendarIds }) => {
+  return window.gapi.client.calendar.freebusy.query({
+    timeMin: timeMin,
+    timeMax: timeMax,
+    items: calendarIds.map(id => ({
+      id
+    }))
+  });
 };
 
 export const listCalendars = () => {

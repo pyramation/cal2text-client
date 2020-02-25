@@ -110,3 +110,19 @@ export const flattenSegments = segments => {
 
   return flattened;
 };
+
+export const apiResponseToFree = (apiResponse, start, end) => {
+  return getFreetime({
+    segments: flattenSegments(mergeCalendars(apiResponse.calendars)),
+    start,
+    end
+  });
+};
+
+export const timeToShortEnglish = timestring => {
+  const date = new Date(timestring);
+};
+
+export const freeToEnglish = segments => {
+  segments.map(segment => {});
+};

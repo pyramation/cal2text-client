@@ -172,3 +172,22 @@ test("freetime", () => {
     }
   ]);
 });
+
+test("timeToShortEnglish", () => {
+  expect();
+});
+
+test("freeToEnglish", () => {
+  expect(
+    freeToEnglish([
+      {
+        start: "2020-02-24T17:30:00Z",
+        end: "2020-02-24T21:00:00Z"
+      },
+      {
+        start: "2020-02-24T21:30:00Z",
+        end: "2020-02-24T22:00:00Z"
+      }
+    ])
+  ).toEqual("5:30pm to 9pm, 9:30pm to 10pm");
+});
