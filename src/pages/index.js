@@ -144,6 +144,11 @@ const Index = () => {
 
   return (
     <Layout>
+      <div className="no-break">
+        <Button onClick={notFinishedChoosingCalendars}>
+          Re-choose Calendars
+        </Button>
+      </div>
       <div>Find my free time between</div>
       <div className="no-break">
         <TimePicker
@@ -184,9 +189,6 @@ const Index = () => {
           icon="timeline-events"
           text="Get Times"
         />
-      </div>
-      <div className="no-break">
-        <Button onClick={notFinishedChoosingCalendars}>Choose Calendars</Button>
       </div>
       <ResultsDisplay
         results={results}
