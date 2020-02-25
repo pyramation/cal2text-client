@@ -58,10 +58,17 @@ export const signOut = event => {
 };
 
 export const getDaysStartEnd = ({ startHour, endHour, days }) => {
-  const now = DateTime.local().set({ minute: 0, second: 0, millisecond: 0 });
+  let now;
+  if (new Date().getHours() < endHour) {
+    now = DateTime.local().set({ minute: 0, second: 0, millisecond: 0 });
+  } else {
+    now = DateTime.local()
+      .plus({ days: 1 })
+      .set({ hour: startHour, minute: 0, second: 0, millisecond: 0 });
+  }
   const dayStartEnds = [
     {
-      start: DateTime.utc().toISO(),
+      start: now.toUTC().toISO(),
       end: now
         .set({ hour: endHour })
         .toUTC()
