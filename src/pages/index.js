@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { TimePicker } from "@blueprintjs/datetime";
-import { Button, NumericInput, Icon, Position } from "@blueprintjs/core";
-import { TimezonePicker, TimezoneDisplayFormat } from "@blueprintjs/timezone";
+import { Button } from "@blueprintjs/core";
 
 import { DateTime } from "luxon";
 
@@ -15,26 +13,8 @@ import {
 
 import { SelectCalendars } from "../components/SelectCalendars";
 
-import ResultsDisplay from "../components/ResultsDisplay";
 import Layout from "../components/Layout";
-
-const jsTimeFormatterStart = {
-  useAmPm: "True",
-  showArrowButtons: "True",
-  defaultValue: new Date(2020, 5, 5, 9)
-};
-
-const jsTimeFormatterEnd = {
-  useAmPm: "True",
-  showArrowButtons: "True",
-  defaultValue: new Date(2020, 5, 5, 17, 0)
-};
-
-const jsNumericInputFormatter = {
-  allowNumericCharactersOnly: "True",
-  min: 1,
-  value: 1
-};
+import MainForm from "../components/MainForm";
 
 const Index = () => {
   const [apiReady, setApiReady] = useState(false);
@@ -55,6 +35,7 @@ const Index = () => {
   const [resultsFetching, setResultsFetching] = useState(false);
 
   const signUserOut = () => {
+    console.log('signOut')
     signOut();
 
     setSignedIn(false);
@@ -124,70 +105,30 @@ const Index = () => {
   if (!calendarsChosen) {
     return (
       <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
-        <div className="calendar-select">
-          <h2>Select Calendars</h2>
-          <SelectCalendars
-            calendars={calendars}
-            selected={calendarsToQuery}
-            setSelected={setCalendarsToQuery}
-          />
-          <Button onClick={doneChoosingCalendars}>Done</Button>
-        </div>
+        <SelectCalendars
+          calendars={calendars}
+          selected={calendarsToQuery}
+          setSelected={setCalendarsToQuery}
+          doneChoosingCalendars={doneChoosingCalendars}
+        />
       </Layout>
     );
   }
 
   return (
     <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
-      <div className="word">Find my free time between</div>
-      <div className="timespan-chooser">
-        <TimePicker
-          {...jsTimeFormatterStart}
-          value={dayStartTime}
-          onChange={setDayStartTime}
-        />
-        <div className="word">and</div>
-        <TimePicker
-          {...jsTimeFormatterEnd}
-          value={dayEndTime}
-          onChange={setDayEndTime}
-        />
-      </div>
-      <div className="days-chooser">
-        <div className="word"> for the next </div>
-        <NumericInput
-          {...jsNumericInputFormatter}
-          value={daysToGet}
-          onValueChange={setDaysToGet}
-        />
-        <div id="week" className="word">
-          {daysToGet > 1 ? "days" : "day"}
-        </div>
-      </div>
-      <div className="timezone-chooser">
-        <div className="word">display in the following timezone </div>
-        <br />
-        <TimezonePicker
-          value={timezone}
-          onChange={setTimezone}
-          showLocalTimezone
-          valueDisplayFormat={TimezoneDisplayFormat.ABBREVIATION}
-          popoverProps={{ position: Position.BOTTOM }}
-        ></TimezonePicker>
-      </div>
-      <div className="gettimes-buttons">
-        <Button
-          onClick={getFreeSummary}
-          icon="timeline-events"
-          text="Get Times"
-          large
-          intent="primary"
-        />
-      </div>
-      <ResultsDisplay
+      <MainForm
+        dayStartTime={dayStartTime}
+        setDayStartTime={setDayStartTime}
+        dayEndTime={dayEndTime}
+        setDayEndTime={setDayEndTime}
+        daysToGet={daysToGet}
+        setDaysToGet={setDaysToGet}
+        timezone={timezone}
+        setTimezone={setTimezone}
         results={results}
         resultsFetching={resultsFetching}
-        timezone={timezone}
+        getFreeSummary={getFreeSummary}
         notFinishedChoosingCalendars={notFinishedChoosingCalendars}
       />
     </Layout>
