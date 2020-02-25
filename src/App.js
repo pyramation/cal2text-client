@@ -4,15 +4,19 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "./App.css";
 
-import Index from "./pages/login";
-import Cal2Text from "./pages/cal2text";
+import Index from "./pages/index";
+import Calendars from "./pages/calendars";
 
-function App() {
+
+
+const App = () => {
   return (
     <div className="App">
+      <a href="/">home</a>
+      <a href="/calendars">calendars</a>
       <Router>
         <Switch>
-          {/* <Route path="/cal2text" component={Cal2Text} /> */}
+          <Route path="/calendars" render={() => <Calendars />} />
           <Route render={() => <Index />} />
         </Switch>
       </Router>

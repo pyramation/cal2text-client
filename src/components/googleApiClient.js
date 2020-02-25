@@ -5,8 +5,6 @@ import React from "react";
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-console.log(CLIENT_ID, API_KEY, "keys");
-
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = [
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
@@ -28,7 +26,6 @@ function handleClientLoad() {
  *  listeners.
  */
 function initClient(callback) {
-  console.log("HELLO?");
   window.gapi.client
     .init({
       apiKey: API_KEY,
@@ -38,7 +35,6 @@ function initClient(callback) {
     })
     .then(
       function() {
-        console.log("Goodbye");
         // Listen for sign-in state changes.
         window.gapi.auth2
           .getAuthInstance()
@@ -50,7 +46,6 @@ function initClient(callback) {
         );
 
         callback();
-        console.log("Goodbye");
       },
       function(error) {
         console.log(error);
@@ -127,7 +122,7 @@ class App extends React.Component {
     super(props);
     this.state = { gapiReady: false };
   }
-  loadYoutubeApi() {
+  loadApi() {
     const script = document.createElement("script");
     script.src = "https://apis.google.com/js/api.js";
 
@@ -147,7 +142,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.loadYoutubeApi();
+    this.loadApi();
   }
 
   handleAuthClick = () => {
