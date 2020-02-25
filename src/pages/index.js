@@ -3,14 +3,8 @@ import { Button } from "@blueprintjs/core";
 
 import { DateTime } from "luxon";
 
-import {
-  signIn,
-  signOut,
-  listCalendars,
-  loadApi,
-  getDaysFreeSummaryText
-} from "../lib/google";
-
+import { signIn, signOut, listCalendars, loadApi } from "../lib/google";
+import { getDaysFreeSummaryText } from "../lib/freetime";
 import { SelectCalendars } from "../components/SelectCalendars";
 
 import Layout from "../components/Layout";
@@ -35,7 +29,7 @@ const Index = () => {
   const [resultsFetching, setResultsFetching] = useState(false);
 
   const signUserOut = () => {
-    console.log('signOut')
+    console.log("signOut");
     signOut();
 
     setSignedIn(false);

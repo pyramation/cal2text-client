@@ -34,7 +34,7 @@ const getText = (results, timezone) => {
   return (
     `I'm free the following times (${
       getTimezoneMetadata(timezone).abbreviation
-    })\n` + results.map((daySummary, i) => `* ${daySummary}`).join("\n")
+    })\n` + results.map(daySummary => `* ${daySummary}`).join("\n")
   );
 };
 
@@ -56,9 +56,8 @@ class AutofocusTextarea extends React.Component {
         className="results-text"
         autoFocus
         onFocus={handleFocus}
-      >
-        {getText(results, timezone)}
-      </textarea>
+        defaultValue={getText(results, timezone)}
+      ></textarea>
     );
   }
 }
