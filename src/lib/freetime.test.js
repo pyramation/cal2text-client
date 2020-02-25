@@ -2,7 +2,8 @@ import {
   flattenSegments,
   getFreetime,
   mergeCalendars,
-  timeToShortEnglish
+  timeToShortEnglish,
+  freeToEnglish
 } from "./freetime";
 
 const apiResponse = {
@@ -179,21 +180,34 @@ test("freetime", () => {
 });
 
 test("timeToShortEnglish", () => {
-  expect(timeToShortEnglish("2020-02-24T17:30:00Z")).toEqual("5:30pm");
-  expect(timeToShortEnglish("2020-02-24T21:00:00Z")).toEqual("9pm");
+  expect(
+    timeToShortEnglish("2020-02-24T17:30:00Z", "America/New_York")
+  ).toEqual("12:30pm");
+  expect(
+    timeToShortEnglish("2020-02-24T21:00:00Z", "America/New_York")
+  ).toEqual("4pm");
+  expect(
+    timeToShortEnglish("2020-02-24T17:30:00Z", "America/Los_Angeles")
+  ).toEqual("9:30am");
+  expect(
+    timeToShortEnglish("2020-02-24T21:00:00Z", "America/Los_Angeles")
+  ).toEqual("1pm");
 });
 
 test("freeToEnglish", () => {
   expect(
-    freeToEnglish([
-      {
-        start: "2020-02-24T17:30:00Z",
-        end: "2020-02-24T21:00:00Z"
-      },
-      {
-        start: "2020-02-24T21:30:00Z",
-        end: "2020-02-24T22:00:00Z"
-      }
-    ])
-  ).toEqual("5:30pm to 9pm, 9:30pm to 10pm");
+    freeToEnglish(
+      [
+        {
+          start: "2020-02-24T17:30:00Z",
+          end: "2020-02-24T21:00:00Z"
+        },
+        {
+          start: "2020-02-24T21:30:00Z",
+          end: "2020-02-24T22:00:00Z"
+        }
+      ],
+      "America/Los_Angeles"
+    )
+  ).toEqual("9:30am to 1pm, 1:30pm to 2pm");
 });

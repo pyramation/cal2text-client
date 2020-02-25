@@ -1,4 +1,5 @@
 import { sortBy, flatten, map, chunk } from "lodash";
+import { DateTime } from "luxon";
 
 // min, max
 // start, end
@@ -111,26 +112,36 @@ export const flattenSegments = segments => {
   return flattened;
 };
 
-export const apiResponseToFree = (apiResponse, start, end) => {
-  return getFreetime({
-    segments: flattenSegments(mergeCalendars(apiResponse.calendars)),
-    start,
-    end
-  });
-};
-
-export const timeToShortEnglish = timestring => {
-  const date = new Date(timestring);
-  const hour = date.getHours() % 12;
+export const timeToShortEnglish = (timeString, timezoneString) => {
+  const date = DateTime.fromISO(timeString).setZone(timezoneString);
+  // const date = new Date(timestring);
+  const hour = date.hour % 12;
   const hourDisplay = hour === 0 ? "12" : `${hour}`;
-  const isPm = date.getHours() >= 12;
+  const isPm = date.hour >= 12;
   const amPmDisplay = isPm ? "pm" : "am";
-  const minutes = date.getMinutes();
+  const minutes = date.minute;
   const minutesDisplay = minutes === 0 ? "" : `:${minutes}`;
 
   return `${hourDisplay}${minutesDisplay}${amPmDisplay}`;
 };
 
-export const freeToEnglish = segments => {
-  segments.map(segment => {});
+export const freeToEnglish = (segments, timezoneString) => {
+  return segments
+    .map(segment => {
+      const startStr = timeToShortEnglish(segment.start, timezoneString);
+      const endStr = timeToShortEnglish(segment.end, timezoneString);
+      return `${startStr} to ${endStr}`;
+    })
+    .join(", ");
+};
+
+export const apiResponseToFree = (apiResponse, start, end, timezoneString) => {
+  return freeToEnglish(
+    getFreetime({
+      segments: flattenSegments(mergeCalendars(apiResponse.calendars)),
+      start,
+      end
+    }),
+    timezoneString
+  );
 };

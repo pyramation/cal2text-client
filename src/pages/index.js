@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TimePicker } from "@blueprintjs/datetime";
 import { Button, NumericInput } from "@blueprintjs/core";
 
+import { DateTime } from "luxon";
+
 import {
   signIn,
   signOut,
@@ -209,8 +211,11 @@ const Index = () => {
     <Layout>
       <div>Final Result: </div>
       <pre>
-        {JSON.stringify(
-          apiResponseToFree(events, today.toISOString(), nextWeek.toISOString)
+        {apiResponseToFree(
+          events,
+          today.toISOString(),
+          nextWeek.toISOString(),
+          DateTime.local().zoneName
         )}
       </pre>
     </Layout>
