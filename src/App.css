@@ -6,11 +6,11 @@ h2 {
   font-weight: 100 !important;
 }
 
-.app-body {
+/* .app-body {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
 .calendar-select {
   margin-top: 5em;
@@ -85,7 +85,7 @@ h2 {
 
 /* elements */
 .bp3-tag {
-  background-color: #00B0FF;
+  background-color: #00b0ff;
 }
 
 .bp3-button.bp3-intent-primary {
@@ -138,5 +138,20 @@ h2 {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .timespan-chooser {
+    flex-direction: column;
+  }
+  .days-chooser {
+    flex-direction: column;
+  }
+  .timezone-chooser {
+    flex-direction: column;
+  }
+  .results-text {
+    width: 90%;
   }
 }
