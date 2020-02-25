@@ -32,6 +32,10 @@ const strMin = (a, b) => {
 
 // this function assumes reduceSegments has been called
 const invertSegments = ({ segments, min, max }) => {
+  if (!segments[0]) {
+    return [];
+  }
+  console.log(segments, "inside invertSegments");
   const firstStart = segments[0].start;
   const lastEnd = segments[segments.length - 1].end;
 
@@ -58,7 +62,9 @@ const invertSegments = ({ segments, min, max }) => {
 };
 
 export const getFreetime = ({ segments, start, end }) => {
+  console.log(segments, "before reducing segments");
   const reduced = reduceSegments({ segments, min: start, max: end });
+  console.log(reduced, "after reducing segments");
   return invertSegments({ segments: reduced, min: start, max: end });
 };
 

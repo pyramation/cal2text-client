@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 // Client ID and API key from the Developer Console
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -68,6 +70,27 @@ export const listEvents = ({
     .then(res => res.result.items);
 };
 
+export const getDaysStartEnd = ({ startHour, endHour, days }) => {
+  const now = DateTime.local().set({ minute: 0 });
+  console.log({ startHour, endHour });
+  const dayStartEnds = [
+    { start: DateTime.local().toISO(), end: now.set({ hour: endHour }).toISO() }
+  ];
+  for (let i = 1; i < days; i++) {
+    dayStartEnds.push({
+      start: now
+        .plus({ days: i })
+        .set({ hour: startHour })
+        .toISO(),
+      end: now
+        .plus({ days: i })
+        .set({ hour: endHour })
+        .toISO()
+    });
+  }
+  return dayStartEnds;
+};
+
 export const getBusyTimes = ({ timeMin, timeMax, calendarIds }) => {
   return window.gapi.client.calendar.freebusy.query({
     timeMin: timeMin,
@@ -76,6 +99,26 @@ export const getBusyTimes = ({ timeMin, timeMax, calendarIds }) => {
       id
     }))
   });
+};
+
+export const getEachDayBusyTimes = ({
+  startHour,
+  endHour,
+  calendarIds,
+  days
+}) => {
+  const daysStartEnd = getDaysStartEnd({ startHour, endHour, days });
+
+  return Promise.all(
+    daysStartEnd.map(({ start, end }) => {
+      console.log({ start, end });
+      return getBusyTimes({
+        timeMin: start,
+        timeMax: end,
+        calendarIds
+      }).then(({ result }) => ({ result, start, end }));
+    })
+  );
 };
 
 export const listCalendars = () => {

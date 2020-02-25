@@ -10,36 +10,13 @@ import {
   listEvents,
   listCalendars,
   loadApi,
-  getBusyTimes
+  getEachDayBusyTimes
 } from "../lib/google";
 
 import { apiResponseToFree } from "../lib/freetime";
 
 import { SelectCalendars } from "../components/SelectCalendars";
 import { Header } from "../components/Header";
-
-const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
-  var week = document.querySelector("#week");
-  if (_valueAsNumber > 1) {
-    if (week.innerHTML !== " weeks.") {
-      week.classList.add("fade");
-      setTimeout(function() {
-        week.innerHTML = " weeks.";
-        week.classList.add("reveal");
-        week.classList.remove("reveal", "fade");
-      }, 500);
-    }
-  } else {
-    if (week.innerHTML !== " week.") {
-      week.classList.add("fade");
-      setTimeout(function() {
-        week.innerHTML = " week.";
-        week.classList.add("reveal");
-        week.classList.remove("reveal", "fade");
-      }, 500);
-    }
-  }
-};
 
 const jsTimeFormatterStart = {
   useAmPm: "True",
@@ -56,8 +33,7 @@ const jsTimeFormatterEnd = {
 const jsNumericInputFormatter = {
   allowNumericCharactersOnly: "True",
   min: 1,
-  value: 1,
-  onValueChange: handleWeekValueChange
+  value: 1
 };
 
 const Index = () => {
@@ -69,6 +45,10 @@ const Index = () => {
   const [calendarsToQuery, setCalendarsToQuery] = useState([]);
   const [calendarsFetched, setCalendarsFetched] = useState(false);
   const [calendarsChosen, setCalendarsChosen] = useState(false);
+
+  const [daysToGet, setDaysToGet] = useState(3);
+  const [dayStartTime, setDayStartTime] = useState(new Date(2020, 5, 5, 9));
+  const [dayEndTime, setDayEndTime] = useState(new Date(2020, 5, 5, 17));
 
   const [events, setEvents] = useState([]);
   const [eventsFetched, setEventsFetched] = useState(false);
@@ -155,14 +135,26 @@ const Index = () => {
       <Layout>
         <div>Find my free time between</div>
         <div className="no-break">
-          <TimePicker {...jsTimeFormatterStart} />
+          <TimePicker
+            {...jsTimeFormatterStart}
+            value={dayStartTime}
+            onChange={setDayStartTime}
+          />
           <div className="vertical-center">and</div>
-          <TimePicker {...jsTimeFormatterEnd} />
+          <TimePicker
+            {...jsTimeFormatterEnd}
+            value={dayEndTime}
+            onChange={setDayEndTime}
+          />
         </div>
         <div className="no-break">
           <div> for the next </div>
-          <NumericInput {...jsNumericInputFormatter} />
-          <div id="week"> week.</div>
+          <NumericInput
+            {...jsNumericInputFormatter}
+            value={daysToGet}
+            onValueChange={setDaysToGet}
+          />
+          <div id="week">{daysToGet > 1 ? "days" : "day"}</div>
         </div>
         <div className="no-break">
           <Button
@@ -188,14 +180,27 @@ const Index = () => {
     // });
     const today = new Date();
     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-    getBusyTimes({
-      timeMin: today.toISOString(),
-      timeMax: nextWeek.toISOString(),
+    getEachDayBusyTimes({
+      startHour: dayStartTime.getHours(),
+      endHour: dayEndTime.getHours(),
+      days: daysToGet,
       calendarIds: calendarsToQuery.map(c => c.id)
-    }).then(({ result }) => {
+    }).then(dayResults => {
+      console.log(dayResults, "dayResults");
+      const result = dayResults.map(({ result: dayResult, start, end }) => {
+        const dayFreeTime = apiResponseToFree(
+          dayResult,
+          start,
+          end,
+          DateTime.local().zoneName
+        );
+
+        const dayName = DateTime.fromISO(start).weekdayLong;
+        return `${dayName}: ${dayFreeTime}`;
+      });
       setEvents(result);
       setEventsFetched(true);
-      console.log(result);
+      // console.log(result);
     });
     return (
       <Layout>
@@ -210,14 +215,11 @@ const Index = () => {
   return (
     <Layout>
       <div>Final Result: </div>
-      <pre>
-        {apiResponseToFree(
-          events,
-          today.toISOString(),
-          nextWeek.toISOString(),
-          DateTime.local().zoneName
-        )}
-      </pre>
+      <p>
+        {events.map((daySummary, i) => (
+          <li key={i}>{daySummary}</li>
+        ))}
+      </p>
     </Layout>
   );
 };
