@@ -94,6 +94,10 @@ h2 {
   background-color: #00b0ff;
 }
 
+.bp3-menu-item.bp3-active.bp3-intent-primary {
+  background-color: #00b0ff;
+}
+
 .bp3-button.bp3-intent-primary {
   background-color: #00b0ff;
   border-radius: 18px;
