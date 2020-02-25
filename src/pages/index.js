@@ -188,7 +188,11 @@ const Index = () => {
       <div className="no-break">
         <Button onClick={notFinishedChoosingCalendars}>Choose Calendars</Button>
       </div>
-      <ResultsDisplay results={results} resultsFetching={resultsFetching} />
+      <ResultsDisplay
+        results={results}
+        resultsFetching={resultsFetching}
+        timezone={timezone}
+      />
     </Layout>
   );
 };

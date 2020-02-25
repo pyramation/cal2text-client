@@ -1,9 +1,9 @@
 import React from "react";
 
-const ResultsDisplay = ({ results, resultsFetching }) => {
+const ResultsDisplay = ({ results, resultsFetching, timezone }) => {
   return results ? (
     <>
-      <div>I'm free the following times: </div>
+      <div>I'm free the following times ({timezone}): </div>
       <p>
         {results.map((daySummary, i) => (
           <li key={i}>{daySummary}</li>
@@ -11,7 +11,7 @@ const ResultsDisplay = ({ results, resultsFetching }) => {
       </p>
     </>
   ) : (
-    <>{resultsFetching ? <h1>fetching events...</h1> : null}</>
+    <>{resultsFetching ? <h1>Fetching events...</h1> : null}</>
   );
 };
 
