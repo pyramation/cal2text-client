@@ -73,7 +73,9 @@ const ResultsDisplay = ({
       <AutofocusTextarea results={results} timezone={timezone} />
     </>
   ) : (
-    <>{resultsFetching ? <h1>Fetching events...</h1> : null}</>
+    <>
+      {resultsFetching ? <div className="loader">Feching events...</div> : null}
+    </>
   );
 };
 

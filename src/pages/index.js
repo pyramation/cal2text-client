@@ -68,21 +68,22 @@ const Index = () => {
   const PageLayout = ({ children }) => {
     return (
       <Layout
-          signOut={signUserOut}
-          signIn={signIn}
-          signedIn={signedIn}
-          setCalendarsChosen={setCalendarsChosen}
-          calendarsChosen={calendarsChosen}
-          >
+        signOut={signUserOut}
+        signIn={signIn}
+        signedIn={signedIn}
+        setCalendarsChosen={setCalendarsChosen}
+        calendarsChosen={calendarsChosen}
+      >
         {children}
-      </Layout>);
-  }
+      </Layout>
+    );
+  };
 
   if (!apiReady) {
     loadApi({ setSignedIn, setApiReady });
     return (
       <PageLayout>
-        <div>Loading API...</div>
+        <div className="loader">Loading API...</div>
       </PageLayout>
     );
   }
@@ -103,7 +104,7 @@ const Index = () => {
     });
     return (
       <PageLayout>
-        <h1>fetching calendars...</h1>
+        <div className="loader">Feching calendars...</div>
       </PageLayout>
     );
   }
