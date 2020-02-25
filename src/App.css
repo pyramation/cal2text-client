@@ -8,6 +8,16 @@ h2 {
   align-items: center;
 } */
 
+.privacy {
+  margin-top: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  text-align: center;
+  max-width: 520px;
+}
+
 .calendar-select {
   margin-top: 5em;
   display: flex;
@@ -81,6 +91,10 @@ h2 {
 
 /* elements */
 .bp3-tag {
+  background-color: #00b0ff;
+}
+
+.bp3-menu-item.bp3-active.bp3-intent-primary {
   background-color: #00b0ff;
 }
 
