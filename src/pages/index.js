@@ -14,8 +14,9 @@ import {
 } from "../lib/google";
 
 import { SelectCalendars } from "../components/SelectCalendars";
-import { Header } from "../components/Header";
+
 import ResultsDisplay from "../components/ResultsDisplay";
+import Layout from "../components/Layout";
 
 const jsTimeFormatterStart = {
   useAmPm: "True",
@@ -87,19 +88,10 @@ const Index = () => {
     setCalendarsChosen(false);
   };
 
-  const Layout = ({ children }) => {
-    return (
-      <>
-        <Header signOut={signUserOut} signIn={signIn} signedIn={signedIn} />
-        <div className="App-header">{children}</div>
-      </>
-    );
-  };
-
   if (!apiReady) {
     loadApi({ setSignedIn, setApiReady });
     return (
-      <Layout>
+      <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
         <div>Loading API...</div>
       </Layout>
     );
@@ -107,7 +99,7 @@ const Index = () => {
 
   if (!signedIn) {
     return (
-      <Layout>
+      <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
         <h1>Not signed in... go for it!</h1>
         <Button onClick={signIn}>Authorize</Button>
       </Layout>
@@ -121,7 +113,7 @@ const Index = () => {
       setCalendarsFetched(true);
     });
     return (
-      <Layout>
+      <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
         <h1>fetching calendars...</h1>
       </Layout>
     );
@@ -129,7 +121,7 @@ const Index = () => {
 
   if (!calendarsChosen) {
     return (
-      <Layout>
+      <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
         <div className="no-break">
           <SelectCalendars
             calendars={calendars}
@@ -143,7 +135,7 @@ const Index = () => {
   }
 
   return (
-    <Layout>
+    <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
       <div className="no-break">
         <Button onClick={notFinishedChoosingCalendars}>
           Re-choose Calendars
@@ -179,7 +171,7 @@ const Index = () => {
           value={timezone}
           onChange={setTimezone}
           showLocalTimezone
-          valueDisplayFormat={TimezoneDisplayFormat.COMPOSITE}
+          valueDisplayFormat={TimezoneDisplayFormat.ABBREVIATION}
           popoverProps={{ position: Position.BOTTOM }}
         ></TimezonePicker>
       </div>
