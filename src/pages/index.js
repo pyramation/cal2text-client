@@ -5,13 +5,14 @@ import { Button, NumericInput } from "@blueprintjs/core";
 
 import {
   signIn,
+  signOut,
   listEvents,
   listCalendars,
   loadApi
 } from '../lib/google';
 
-import { SelectCalendars } from './calendars';
-
+import { SelectCalendars } from '../components/SelectCalendars';
+import { Header } from '../components/Header';
 
 const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
   var week = document.querySelector("#week");
@@ -55,15 +56,6 @@ const jsNumericInputFormatter = {
   onValueChange: handleWeekValueChange
 };
 
-const Layout = ({ children }) => {
-  return (
-    <header className="App-header">
-      {children}
-    </header>
-  );
-
-}
-
 const Index = () => {
   const [apiReady, setApiReady] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
@@ -76,6 +68,32 @@ const Index = () => {
 
   const [events, setEvents] = useState([]);
   const [eventsFetched, setEventsFetched] = useState(false);
+
+  const signUserOut = () => {
+    signOut();
+
+    setSignedIn(false);
+    setGetTimes(false);
+    
+    setCalendars([]);
+    setCalendarsToQuery([]);
+    setCalendarsFetched(false);
+    setCalendarsChosen(false);
+
+    setEventsFetched(false)
+    setEvents([])
+  }
+
+  const Layout = ({ children }) => {
+    return (
+      <>
+      <Header signOut={signUserOut} />
+      <div className="App-header">
+        {children}
+      </div>
+      </>
+    );
+  }
 
   const doneChoosingCalendars = () => {
     setCalendarsChosen(true);
