@@ -116,7 +116,8 @@ export const getDaysFreeSummaryText = ({
   startHour,
   endHour,
   days,
-  calendarIds
+  calendarIds,
+  timezone
 }) => {
   return getEachDayBusyTimes({
     startHour,
@@ -125,12 +126,7 @@ export const getDaysFreeSummaryText = ({
     calendarIds
   }).then(dayResults => {
     const result = dayResults.map(({ result: dayResult, start, end }) => {
-      const dayFreeTime = apiResponseToFree(
-        dayResult,
-        start,
-        end,
-        DateTime.local().zoneName
-      );
+      const dayFreeTime = apiResponseToFree(dayResult, start, end, timezone);
 
       const dayName = DateTime.fromISO(start).weekdayLong;
       return `${dayName}: ${dayFreeTime}`;

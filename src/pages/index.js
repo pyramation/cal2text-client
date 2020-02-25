@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { TimePicker } from "@blueprintjs/datetime";
-import { Button, NumericInput } from "@blueprintjs/core";
+import { Button, NumericInput, Icon, Position } from "@blueprintjs/core";
+import { TimezonePicker, TimezoneDisplayFormat } from "@blueprintjs/timezone";
+
+import { DateTime } from "luxon";
 
 import {
   signIn,
@@ -45,6 +48,7 @@ const Index = () => {
   const [daysToGet, setDaysToGet] = useState(3);
   const [dayStartTime, setDayStartTime] = useState(new Date(2020, 5, 5, 9));
   const [dayEndTime, setDayEndTime] = useState(new Date(2020, 5, 5, 17));
+  const [timezone, setTimezone] = useState(DateTime.local().zoneName);
 
   const [results, setResults] = useState(null);
   const [resultsFetching, setResultsFetching] = useState(false);
@@ -69,7 +73,8 @@ const Index = () => {
       startHour: dayStartTime.getHours(),
       endHour: dayEndTime.getHours(),
       days: daysToGet,
-      calendarIds: calendarsToQuery.map(c => c.id)
+      calendarIds: calendarsToQuery.map(c => c.id),
+      timezone
     }).then(result => {
       setResults(result);
     });
@@ -161,6 +166,17 @@ const Index = () => {
           onValueChange={setDaysToGet}
         />
         <div id="week">{daysToGet > 1 ? "days" : "day"}</div>
+      </div>
+      <div className="no-break">
+        <div>display in the following timezone </div>
+        <br />
+        <TimezonePicker
+          value={timezone}
+          onChange={setTimezone}
+          showLocalTimezone
+          valueDisplayFormat={TimezoneDisplayFormat.COMPOSITE}
+          popoverProps={{ position: Position.BOTTOM }}
+        ></TimezonePicker>
       </div>
       <div className="no-break">
         <Button

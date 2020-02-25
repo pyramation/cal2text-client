@@ -897,7 +897,7 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@blueprintjs/core@^3.20.0", "@blueprintjs/core@^3.23.0", "@blueprintjs/core@^3.23.1":
+"@blueprintjs/core@^3.19.0", "@blueprintjs/core@^3.20.0", "@blueprintjs/core@^3.23.0", "@blueprintjs/core@^3.23.1":
   version "3.23.1"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.23.1.tgz#346bd5430494cc2965fa9cac7366dc94c9dcf918"
   integrity sha512-Lh+uCYAf2a54L739/NntMKUHkMoCintbs/NidX1j950KL0GW0J95niFqmN2B3oV/uJdXsPjZKj6VyOBlI+tUIA==
@@ -932,13 +932,25 @@
     classnames "^2.2"
     tslib "~1.9.0"
 
-"@blueprintjs/select@^3.11.2":
+"@blueprintjs/select@^3.11.0", "@blueprintjs/select@^3.11.2":
   version "3.11.2"
   resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-3.11.2.tgz#3324db0de44a9f386b957aac1ba3ec774b3eb1e7"
   integrity sha512-fU0Km6QI/ayWhzYeu9N1gTj0+L0XUO4KB3u2LfJXgj648UGY8F4HX2ETdJ+XPdtsu6TesrIL7ghMQhtLcvafBg==
   dependencies:
     "@blueprintjs/core" "^3.20.0"
     classnames "^2.2"
+    tslib "~1.9.0"
+
+"@blueprintjs/timezone@^3.6.1":
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/timezone/-/timezone-3.6.1.tgz#b617ee3d049e23113540fcc2bf7fab000546e3a9"
+  integrity sha512-emCKUP9iEYFOxEMMcm1aQFaePs7mbeiRlH1NOnG3kwZnPxZYK6zUtpe/tP6dyWhBNxjFaDjFJ+f8JbyYGPtktQ==
+  dependencies:
+    "@blueprintjs/core" "^3.19.0"
+    "@blueprintjs/select" "^3.11.0"
+    classnames "^2.2"
+    moment "^2.24.0"
+    moment-timezone "^0.5.27"
     tslib "~1.9.0"
 
 "@cnakazawa/watch@^1.0.3":
@@ -6656,6 +6668,18 @@ mkdirp@0.5.1, mkdirp@^0.5.1, mkdirp@~0.5.1:
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
+
+moment-timezone@^0.5.27:
+  version "0.5.28"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.28.tgz#f093d789d091ed7b055d82aa81a82467f72e4338"
+  integrity sha512-TDJkZvAyKIVWg5EtVqRzU97w0Rb0YVbfpqyjgu6GwXCAohVRqwZjf4fOzDE6p1Ch98Sro/8hQQi65WDXW5STPw==
+  dependencies:
+    moment ">= 2.9.0"
+
+"moment@>= 2.9.0", moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
