@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, MenuItem } from "@blueprintjs/core";
+import { Button, MenuItem, Icon } from "@blueprintjs/core";
 import { MultiSelect } from "@blueprintjs/select";
+import calendarIcon from '../assets/cal.png';
 
 export const SelectCalendars = ({ calendars, selected, setSelected }) => {
   const isSelected = item => selected.includes(item);
@@ -61,7 +62,13 @@ export const SelectCalendars = ({ calendars, selected, setSelected }) => {
   };
 
   return (
+    <>
+  <h1>Choose all calendars you need to coordinate with</h1>
+   <br />
+   <img src={calendarIcon} />
+   <br />
     <MultiSelect
+    
       itemRenderer={renderItem}
       items={calendars}
       noResults={<MenuItem disabled={true} text="No results." />}
@@ -70,5 +77,6 @@ export const SelectCalendars = ({ calendars, selected, setSelected }) => {
       selectedItems={selected}
       tagInputProps={tagInputProps}
     />
+    </>
   );
 };
