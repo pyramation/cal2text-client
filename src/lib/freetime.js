@@ -40,6 +40,7 @@ const strMin = (a, b) => {
 
 // this function assumes reduceSegments has been called
 const invertSegments = ({ segments, min, max }) => {
+  console.log({ segments, min, max });
   if (!segments[0]) {
     return [];
   }
@@ -61,12 +62,16 @@ const invertSegments = ({ segments, min, max }) => {
     points.push(max);
   }
 
-  return chunk(points, 2)
+  const result = chunk(points, 2)
     .map(([start, end]) => ({
       start,
       end
     }))
     .filter(({ start, end }) => !!end && !!start);
+
+  console.log(result);
+
+  return result;
 };
 
 export const getFreetime = ({ segments, start, end }) => {
@@ -133,8 +138,9 @@ export const timeToShortEnglish = (timeString, timezoneString) => {
   const hourDisplay = hour === 0 ? "12" : `${hour}`;
   const isPm = date.hour >= 12;
   const amPmDisplay = isPm ? "pm" : "am";
-  const minutes = date.minute;
-  const minutesDisplay = minutes === 0 ? "" : `:${minutes}`;
+  const minutes = `${date.minute}`;
+  const minutesDisplay =
+    minutes === "0" ? "" : `:${minutes.length === 1 ? `0${minutes}` : minutes}`;
 
   return `${hourDisplay}${minutesDisplay}${amPmDisplay}`;
 };

@@ -2,20 +2,17 @@ import React, { useState } from "react";
 import { TimePicker } from "@blueprintjs/datetime";
 import { Button, NumericInput } from "@blueprintjs/core";
 
-import { DateTime } from "luxon";
-
 import {
   signIn,
   signOut,
-  listEvents,
   listCalendars,
   loadApi,
-  getEachDayBusyTimes,
   getDaysFreeSummaryText
 } from "../lib/google";
 
 import { SelectCalendars } from "../components/SelectCalendars";
 import { Header } from "../components/Header";
+import ResultsDisplay from "../components/ResultsDisplay";
 
 const jsTimeFormatterStart = {
   useAmPm: "True",
@@ -49,8 +46,8 @@ const Index = () => {
   const [dayStartTime, setDayStartTime] = useState(new Date(2020, 5, 5, 9));
   const [dayEndTime, setDayEndTime] = useState(new Date(2020, 5, 5, 17));
 
-  const [events, setEvents] = useState([]);
-  const [eventsFetched, setEventsFetched] = useState(false);
+  const [results, setResults] = useState(null);
+  const [resultsFetching, setResultsFetching] = useState(false);
 
   const signUserOut = () => {
     signOut();
@@ -63,8 +60,26 @@ const Index = () => {
     setCalendarsFetched(false);
     setCalendarsChosen(false);
 
-    setEventsFetched(false);
-    setEvents([]);
+    setResultsFetching(false);
+    setResults(null);
+  };
+
+  const getFreeSummary = () => {
+    getDaysFreeSummaryText({
+      startHour: dayStartTime.getHours(),
+      endHour: dayEndTime.getHours(),
+      days: daysToGet,
+      calendarIds: calendarsToQuery.map(c => c.id)
+    }).then(result => {
+      setResults(result);
+    });
+  };
+
+  const doneChoosingCalendars = () => {
+    setCalendarsChosen(true);
+  };
+  const notFinishedChoosingCalendars = () => {
+    setCalendarsChosen(false);
   };
 
   const Layout = ({ children }) => {
@@ -74,13 +89,6 @@ const Index = () => {
         <div className="App-header">{children}</div>
       </>
     );
-  };
-
-  const doneChoosingCalendars = () => {
-    setCalendarsChosen(true);
-  };
-  const notFinishedChoosingCalendars = () => {
-    setCalendarsChosen(false);
   };
 
   if (!apiReady) {
@@ -129,74 +137,42 @@ const Index = () => {
     );
   }
 
-  if (!getTimes) {
-    return (
-      <Layout>
-        <div>Find my free time between</div>
-        <div className="no-break">
-          <TimePicker
-            {...jsTimeFormatterStart}
-            value={dayStartTime}
-            onChange={setDayStartTime}
-          />
-          <div className="vertical-center">and</div>
-          <TimePicker
-            {...jsTimeFormatterEnd}
-            value={dayEndTime}
-            onChange={setDayEndTime}
-          />
-        </div>
-        <div className="no-break">
-          <div> for the next </div>
-          <NumericInput
-            {...jsNumericInputFormatter}
-            value={daysToGet}
-            onValueChange={setDaysToGet}
-          />
-          <div id="week">{daysToGet > 1 ? "days" : "day"}</div>
-        </div>
-        <div className="no-break">
-          <Button
-            onClick={() => setGetTimes(true)}
-            icon="timeline-events"
-            text="Get Times"
-          />
-        </div>
-        <div className="no-break">
-          <Button onClick={notFinishedChoosingCalendars}>
-            Choose Calendars
-          </Button>
-        </div>
-      </Layout>
-    );
-  }
-
-  if (!eventsFetched) {
-    getDaysFreeSummaryText({
-      startHour: dayStartTime.getHours(),
-      endHour: dayEndTime.getHours(),
-      days: daysToGet,
-      calendarIds: calendarsToQuery.map(c => c.id)
-    }).then(result => {
-      setEvents(result);
-      setEventsFetched(true);
-    });
-
-    return (
-      <Layout>
-        <h1>fetching events...</h1>
-      </Layout>
-    );
-  }
-
   return (
     <Layout>
-      <div>Final Result: </div>
-      <p>
-        {events.map((daySummary, i) => (
-          <li key={i}>{daySummary}</li>
-        ))}
-      </p>
+      <div>Find my free time between</div>
+      <div className="no-break">
+        <TimePicker
+          {...jsTimeFormatterStart}
+          value={dayStartTime}
+          onChange={setDayStartTime}
+        />
+        <div className="vertical-center">and</div>
+        <TimePicker
+          {...jsTimeFormatterEnd}
+          value={dayEndTime}
+          onChange={setDayEndTime}
+        />
+      </div>
+      <div className="no-break">
+        <div> for the next </div>
+        <NumericInput
+          {...jsNumericInputFormatter}
+          value={daysToGet}
+          onValueChange={setDaysToGet}
+        />
+        <div id="week">{daysToGet > 1 ? "days" : "day"}</div>
+      </div>
+      <div className="no-break">
+        <Button
+          onClick={getFreeSummary}
+          icon="timeline-events"
+          text="Get Times"
+        />
+      </div>
+      <div className="no-break">
+        <Button onClick={notFinishedChoosingCalendars}>Choose Calendars</Button>
+      </div>
+      <ResultsDisplay results={results} resultsFetching={resultsFetching} />
     </Layout>
   );
 };

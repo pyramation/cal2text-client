@@ -184,6 +184,9 @@ test("timeToShortEnglish", () => {
     timeToShortEnglish("2020-02-24T17:30:00Z", "America/New_York")
   ).toEqual("12:30pm");
   expect(
+    timeToShortEnglish("2020-02-24T17:03:00Z", "America/New_York")
+  ).toEqual("12:03pm");
+  expect(
     timeToShortEnglish("2020-02-24T21:00:00Z", "America/New_York")
   ).toEqual("4pm");
   expect(
