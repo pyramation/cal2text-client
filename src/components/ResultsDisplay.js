@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@blueprintjs/core";
 
 import * as moment from "moment-timezone";
 
@@ -25,18 +26,34 @@ export function getTimezoneMetadata(timezone, date = new Date()) {
   };
 }
 
-const ResultsDisplay = ({ results, resultsFetching, timezone }) => {
+const handleFocus = event => {
+  event.target.select();
+};
+
+const getText = (results, timezone) => {
+  return (
+    `I'm free the following times (${
+      getTimezoneMetadata(timezone).abbreviation
+    })\n` + results.map((daySummary, i) => `* ${daySummary}`).join("\n")
+  );
+};
+
+const ResultsDisplay = ({
+  results,
+  resultsFetching,
+  timezone,
+  notFinishedChoosingCalendars
+}) => {
   return results ? (
     <>
-      <div>
-        I'm free the following times (
-        {getTimezoneMetadata(timezone).abbreviation}):{" "}
+      <textarea className="results-text" autofocus="true" onFocus={handleFocus}>
+        {getText(results, timezone)}
+      </textarea>
+      <div className="calendar-chooser">
+        <Button onClick={notFinishedChoosingCalendars}>
+          Re-choose Calendars
+        </Button>
       </div>
-      <p>
-        {results.map((daySummary, i) => (
-          <li key={i}>{daySummary}</li>
-        ))}
-      </p>
     </>
   ) : (
     <>{resultsFetching ? <h1>Fetching events...</h1> : null}</>

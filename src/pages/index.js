@@ -137,11 +137,6 @@ const Index = () => {
 
   return (
     <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
-      <div className="calendar-chooser">
-        <Button onClick={notFinishedChoosingCalendars}>
-          Re-choose Calendars
-        </Button>
-      </div>
       <div className="word">Find my free time between</div>
       <div className="timespan-chooser">
         <TimePicker
@@ -191,6 +186,7 @@ const Index = () => {
         results={results}
         resultsFetching={resultsFetching}
         timezone={timezone}
+        notFinishedChoosingCalendars={notFinishedChoosingCalendars}
       />
     </Layout>
   );
