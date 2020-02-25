@@ -1,5 +1,7 @@
 import { DateTime } from "luxon";
 
+import ordinal from "ordinal";
+
 import { apiResponseToFree } from "./freetime";
 
 // Client ID and API key from the Developer Console
@@ -128,8 +130,10 @@ export const getDaysFreeSummaryText = ({
     const result = dayResults.map(({ result: dayResult, start, end }) => {
       const dayFreeTime = apiResponseToFree(dayResult, start, end, timezone);
 
-      const dayName = DateTime.fromISO(start).weekdayLong;
-      return `${dayName}: ${dayFreeTime}`;
+      const day = DateTime.fromISO(start);
+      const dayName = day.weekdayShort;
+      const monthDay = day.day;
+      return `${dayName} ${ordinal(monthDay)}: ${dayFreeTime}`;
     });
     return result;
   });
