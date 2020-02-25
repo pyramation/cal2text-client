@@ -74,7 +74,6 @@ export const listEvents = ({
 
 export const getDaysStartEnd = ({ startHour, endHour, days }) => {
   const now = DateTime.local().set({ minute: 0, second: 0, millisecond: 0 });
-  console.log({ startHour, endHour });
   const dayStartEnds = [
     {
       start: DateTime.utc().toISO(),
@@ -121,7 +120,6 @@ export const getEachDayBusyTimes = ({
 
   return Promise.all(
     daysStartEnd.map(({ start, end }) => {
-      console.log({ start, end });
       return getBusyTimes({
         timeMin: start,
         timeMax: end,
@@ -143,7 +141,6 @@ export const getDaysFreeSummaryText = ({
     days,
     calendarIds
   }).then(dayResults => {
-    console.log(dayResults, "dayResults");
     const result = dayResults.map(({ result: dayResult, start, end }) => {
       const dayFreeTime = apiResponseToFree(
         dayResult,
