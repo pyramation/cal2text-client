@@ -55,23 +55,6 @@ export const signOut = event => {
   window.gapi.auth2.getAuthInstance().signOut();
 };
 
-export const listEvents = ({
-  calendarId = "primary",
-  timeMin = new Date().toISOString(),
-  maxResults = 10
-} = {}) => {
-  return window.gapi.client.calendar.events
-    .list({
-      calendarId,
-      timeMin,
-      showDeleted: false,
-      singleEvents: true,
-      maxResults,
-      orderBy: "startTime"
-    })
-    .then(res => res.result.items);
-};
-
 export const getDaysStartEnd = ({ startHour, endHour, days }) => {
   const now = DateTime.local().set({ minute: 0, second: 0, millisecond: 0 });
   const dayStartEnds = [

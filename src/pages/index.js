@@ -103,7 +103,7 @@ const Index = () => {
   if (!signedIn) {
     return (
       <Layout>
-        <h1>Not signed in...go for it!</h1>
+        <h1>Not signed in... go for it!</h1>
         <Button onClick={signIn}>Authorize</Button>
       </Layout>
     );
