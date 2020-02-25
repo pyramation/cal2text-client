@@ -3,10 +3,10 @@ import { Header } from "./Header";
 
 const Layout = ({ children, signUserOut, signIn, signedIn }) => {
   return (
-    <>
+    <div className="layout-container">
       <Header signOut={signUserOut} signIn={signIn} signedIn={signedIn} />
-      <div className="App-header">{children}</div>
-    </>
+      <div className="app-body">{children}</div>
+    </div>
   );
 };
 
