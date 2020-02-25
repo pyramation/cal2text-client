@@ -1,5 +1,7 @@
 import { DateTime } from "luxon";
 
+import { apiResponseToFree } from "./freetime";
+
 // Client ID and API key from the Developer Console
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -119,6 +121,34 @@ export const getEachDayBusyTimes = ({
       }).then(({ result }) => ({ result, start, end }));
     })
   );
+};
+
+export const getDaysFreeSummaryText = ({
+  startHour,
+  endHour,
+  days,
+  calendarIds
+}) => {
+  return getEachDayBusyTimes({
+    startHour,
+    endHour,
+    days,
+    calendarIds
+  }).then(dayResults => {
+    console.log(dayResults, "dayResults");
+    const result = dayResults.map(({ result: dayResult, start, end }) => {
+      const dayFreeTime = apiResponseToFree(
+        dayResult,
+        start,
+        end,
+        DateTime.local().zoneName
+      );
+
+      const dayName = DateTime.fromISO(start).weekdayLong;
+      return `${dayName}: ${dayFreeTime}`;
+    });
+    return result;
+  });
 };
 
 export const listCalendars = () => {

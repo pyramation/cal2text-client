@@ -10,10 +10,9 @@ import {
   listEvents,
   listCalendars,
   loadApi,
-  getEachDayBusyTimes
+  getEachDayBusyTimes,
+  getDaysFreeSummaryText
 } from "../lib/google";
-
-import { apiResponseToFree } from "../lib/freetime";
 
 import { SelectCalendars } from "../components/SelectCalendars";
 import { Header } from "../components/Header";
@@ -173,28 +172,16 @@ const Index = () => {
   }
 
   if (!eventsFetched) {
-    getEachDayBusyTimes({
+    getDaysFreeSummaryText({
       startHour: dayStartTime.getHours(),
       endHour: dayEndTime.getHours(),
       days: daysToGet,
       calendarIds: calendarsToQuery.map(c => c.id)
-    }).then(dayResults => {
-      console.log(dayResults, "dayResults");
-      const result = dayResults.map(({ result: dayResult, start, end }) => {
-        const dayFreeTime = apiResponseToFree(
-          dayResult,
-          start,
-          end,
-          DateTime.local().zoneName
-        );
-
-        const dayName = DateTime.fromISO(start).weekdayLong;
-        return `${dayName}: ${dayFreeTime}`;
-      });
+    }).then(result => {
       setEvents(result);
       setEventsFetched(true);
-      // console.log(result);
     });
+
     return (
       <Layout>
         <h1>fetching events...</h1>
