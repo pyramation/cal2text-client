@@ -3,7 +3,8 @@ import {
   getFreetime,
   mergeCalendars,
   timeToShortEnglish,
-  freeToEnglish
+  freeToEnglish,
+  invertSegments
 } from "./freetime";
 
 const apiResponse = {
@@ -214,3 +215,18 @@ test("freeToEnglish", () => {
     )
   ).toEqual("9:30am to 1pm, 1:30pm to 2pm");
 });
+
+// test("invertSegment", () => {
+//   expect(
+//     invertSegments({
+//       segments: [
+//         { start: "2020-02-25T20:30:00Z", end: "2020-02-25T19:00:00.000-05:00" }
+//       ],
+//       min: "2020-02-25T13:13:39.431-05:00",
+//       max: "2020-02-25T19:00:00.000-05:00"
+//     })
+//   ).toEqual([
+//     { start: "2020-02-25T13:13:39.431-05:00", end: "2020-02-25T20:30:00Z" },
+//     { start: "2020-02-25T19:00:00.000-05:00", end: }
+//   ]);
+// });

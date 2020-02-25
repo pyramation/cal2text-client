@@ -40,7 +40,7 @@ const strMin = (a, b) => {
 
 // this function assumes reduceSegments has been called
 const invertSegments = ({ segments, min, max }) => {
-  console.log({ segments, min, max });
+  console.log(JSON.stringify({ segments, min, max }));
   if (!segments[0]) {
     return [];
   }
@@ -69,7 +69,7 @@ const invertSegments = ({ segments, min, max }) => {
     }))
     .filter(({ start, end }) => !!end && !!start);
 
-  console.log(result);
+  console.log(JSON.stringify(result));
 
   return result;
 };

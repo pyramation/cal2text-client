@@ -73,20 +73,28 @@ export const listEvents = ({
 };
 
 export const getDaysStartEnd = ({ startHour, endHour, days }) => {
-  const now = DateTime.local().set({ minute: 0 });
+  const now = DateTime.local().set({ minute: 0, second: 0, millisecond: 0 });
   console.log({ startHour, endHour });
   const dayStartEnds = [
-    { start: DateTime.local().toISO(), end: now.set({ hour: endHour }).toISO() }
+    {
+      start: DateTime.utc().toISO(),
+      end: now
+        .set({ hour: endHour })
+        .toUTC()
+        .toISO()
+    }
   ];
   for (let i = 1; i < days; i++) {
     dayStartEnds.push({
       start: now
         .plus({ days: i })
         .set({ hour: startHour })
+        .toUTC()
         .toISO(),
       end: now
         .plus({ days: i })
         .set({ hour: endHour })
+        .toUTC()
         .toISO()
     });
   }
