@@ -8,12 +8,14 @@ import "@blueprintjs/select/lib/css/blueprint-select.css";
 import "./App.css";
 
 import Index from "./pages/index";
+import { Privacy } from "./pages/privacy";
 
 const App = () => {
   return (
     <div className="App">
       <Router>
         <Switch>
+          <Route path="/privacy" component={Privacy} />
           <Route render={() => <Index />} />
         </Switch>
       </Router>
