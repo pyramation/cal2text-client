@@ -14,7 +14,6 @@ import { SelectCalendars } from './calendars';
 
 
 const handleWeekValueChange = (_valueAsNumber, valueAsString) => {
-  console.log(_valueAsNumber);
   var week = document.querySelector("#week");
   if (_valueAsNumber > 1) {
     if (week.innerHTML !== " weeks.") {
@@ -56,6 +55,15 @@ const jsNumericInputFormatter = {
   onValueChange: handleWeekValueChange
 };
 
+const Layout = ({ children }) => {
+  return (
+    <header className="App-header">
+      {children}
+    </header>
+  );
+
+}
+
 const Index = () => {
   const [apiReady, setApiReady] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
@@ -79,18 +87,18 @@ const Index = () => {
   if (!apiReady) {
     loadApi({ setSignedIn, setApiReady })
     return (
-      <header className="App-header">
+      <Layout>
         <div>Loading API...</div>
-      </header>
+      </Layout>
     )
   }
 
   if (!signedIn) {
     return (
-      <header className="App-header">
+      <Layout>
         <h1>Not signed in...go for it!</h1>
         <Button onClick={signIn}>Authorize</Button>
-      </header>
+      </Layout>
     )
   }
 
@@ -101,24 +109,26 @@ const Index = () => {
       setCalendarsFetched(true);
     });
     return (
-      <header className="App-header">
+      <Layout>
         <h1>fetching calendars...</h1>
-      </header>);
+      </Layout>);
   }
 
 
   if (!calendarsChosen) {
     return (
-      <>
-        <SelectCalendars calendars={calendars} selected={calendarsToQuery} setSelected={setCalendarsToQuery} />
-        <Button onClick={doneChoosingCalendars}>Done</Button>
-      </>
+      <Layout>
+        <div className="no-break">
+          <SelectCalendars calendars={calendars} selected={calendarsToQuery} setSelected={setCalendarsToQuery} />
+          <Button onClick={doneChoosingCalendars}>Done</Button>
+        </div>
+      </Layout>
     )
   }
 
   if (!getTimes) {
     return (
-      <header className="App-header">
+      <Layout>
         <div>Find my free time between</div>
         <div className="no-break">
           <TimePicker {...jsTimeFormatterStart} />
@@ -131,29 +141,36 @@ const Index = () => {
           <div id="week"> week.</div>
         </div>
         <div className="no-break">
-          <Button icon="timeline-events" text="Get Times" />
+          <Button onClick={() => setGetTimes(true)} icon="timeline-events" text="Get Times" />
         </div>
         <div className="no-break">
           <Button onClick={notFinishedChoosingCalendars} >Choose Calendars</Button>
         </div>
-      </header>
+      </Layout>
     );
   }
 
 
   if (!eventsFetched) {
-    listEvents().then(res => {
+    // TODO pass list of calendars and batch
+    listEvents({calendarId: calendarsToQuery[0].id}).then(res => {
       setEvents(res);
       setEventsFetched(true);
     });
     return (
-      <header className="App-header">
+      <Layout>
         <h1>fetching events...</h1>
-        <pre>
-          {JSON.stringify(events, null, 2)}
-        </pre>
-      </header>);
+      </Layout>);
   }
+
+  return (
+    <Layout>
+      <div>Final Result: </div>
+      <pre>
+        {JSON.stringify(events, null, 2)}
+      </pre>
+    </Layout>
+  )
 
 
 };
