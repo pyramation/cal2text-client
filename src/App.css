@@ -160,4 +160,7 @@ h2 {
   .results-text {
     width: 90%;
   }
+  .landing-image {
+    width: 100%;
+  }
 }
