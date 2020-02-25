@@ -10,6 +10,14 @@ import { DateTime } from "luxon";
 // if start >= min && end < max -> add {start, max}
 
 const reduceSegments = ({ segments, min, max }) => {
+  if (segments.length === 1) {
+    return [
+      {
+        start: strMax(min, segments[0].start),
+        end: strMin(max, segments[0].end)
+      }
+    ];
+  }
   return segments.reduce((m, { start, end }) => {
     if (start < min && end < min) return m;
     if (start >= max) return m;
