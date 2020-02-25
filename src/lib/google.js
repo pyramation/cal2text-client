@@ -2,7 +2,8 @@ import { DateTime } from "luxon";
 
 import ordinal from "ordinal";
 
-import { apiResponseToFree } from "./freetime";
+import { apiResponseToFree, strMin, strMax } from "./freetime";
+import { min } from "moment";
 
 // Client ID and API key from the Developer Console
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -129,8 +130,8 @@ export const getDaysFreeSummaryText = ({
   timezone
 }) => {
   return getEachDayBusyTimes({
-    startHour,
-    endHour,
+    startHour: Math.min(startHour, endHour),
+    endHour: Math.max(startHour, endHour),
     days,
     calendarIds
   }).then(dayResults => {
