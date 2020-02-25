@@ -2,6 +2,7 @@ import React from "react";
 
 import { TimePicker } from "@blueprintjs/datetime";
 import { Button, NumericInput } from "@blueprintjs/core";
+import GoogleApiClient from "../components/googleApiClient";
 
 import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
@@ -52,19 +53,20 @@ const Index = () => {
   return (
     <header className="App-header">
       <div>Find my free time between</div>
-      <div class="no-break">
+      <div className="no-break">
         <TimePicker {...jsTimeFormatterStart} />
-        <div class="vertical-center">and</div>
+        <div className="vertical-center">and</div>
         <TimePicker {...jsTimeFormatterEnd} />
       </div>
-      <div class="no-break">
+      <div className="no-break">
         <div> for the next </div>
         <NumericInput {...jsNumericInputFormatter} />
         <div id="week"> week.</div>
       </div>
-      <div class="no-break">
+      <div className="no-break">
         <Button icon="timeline-events" text="Get Times" />
       </div>
+      <GoogleApiClient />
     </header>
   );
 };
