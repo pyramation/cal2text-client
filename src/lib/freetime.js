@@ -40,8 +40,13 @@ const strMin = (a, b) => {
 
 // this function assumes reduceSegments has been called
 const invertSegments = ({ segments, min, max }) => {
-  if (!segments[0]) {
-    return [];
+  if (!segments.length) {
+    return [
+      {
+        start: min,
+        end: max
+      }
+    ];
   }
   const firstStart = segments[0].start;
   const lastEnd = segments[segments.length - 1].end;
@@ -82,6 +87,8 @@ export const mergeCalendars = calendars => {
 };
 
 export const flattenSegments = segments => {
+  if (!segments.length) return segments;
+
   let currentStart = segments[0].start;
   let currentEnd = segments[0].end;
 
