@@ -122,7 +122,8 @@ const Index = () => {
   if (!calendarsChosen) {
     return (
       <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
-        <div className="no-break">
+        <div className="calendar-select">
+          <h2>Select Calendars</h2>
           <SelectCalendars
             calendars={calendars}
             selected={calendarsToQuery}
@@ -136,36 +137,38 @@ const Index = () => {
 
   return (
     <Layout signOut={signUserOut} signIn={signIn} signedIn={signedIn}>
-      <div className="no-break">
+      <div className="calendar-chooser">
         <Button onClick={notFinishedChoosingCalendars}>
           Re-choose Calendars
         </Button>
       </div>
-      <div>Find my free time between</div>
-      <div className="no-break">
+      <div className="word">Find my free time between</div>
+      <div className="timespan-chooser">
         <TimePicker
           {...jsTimeFormatterStart}
           value={dayStartTime}
           onChange={setDayStartTime}
         />
-        <div className="vertical-center">and</div>
+        <div className="word">and</div>
         <TimePicker
           {...jsTimeFormatterEnd}
           value={dayEndTime}
           onChange={setDayEndTime}
         />
       </div>
-      <div className="no-break">
-        <div> for the next </div>
+      <div className="days-chooser">
+        <div className="word"> for the next </div>
         <NumericInput
           {...jsNumericInputFormatter}
           value={daysToGet}
           onValueChange={setDaysToGet}
         />
-        <div id="week">{daysToGet > 1 ? "days" : "day"}</div>
+        <div id="week" className="word">
+          {daysToGet > 1 ? "days" : "day"}
+        </div>
       </div>
-      <div className="no-break">
-        <div>display in the following timezone </div>
+      <div className="timezone-chooser">
+        <div className="word">display in the following timezone </div>
         <br />
         <TimezonePicker
           value={timezone}
@@ -175,11 +178,13 @@ const Index = () => {
           popoverProps={{ position: Position.BOTTOM }}
         ></TimezonePicker>
       </div>
-      <div className="no-break">
+      <div className="gettimes-buttons">
         <Button
           onClick={getFreeSummary}
           icon="timeline-events"
           text="Get Times"
+          large
+          intent="primary"
         />
       </div>
       <ResultsDisplay

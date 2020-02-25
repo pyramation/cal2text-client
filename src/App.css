@@ -1,0 +1,46 @@
+.app-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-select {
+  margin-top: 5em;
+}
+
+.calendar-chooser {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 2.5em;
+}
+
+.timespan-chooser {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.days-chooser {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.timezone-chooser {
+  margin-top: 1.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.word {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  font-size: 2em;
+}
+
+.gettimes-buttons {
+  margin-top: 1em;
+}
