@@ -2,6 +2,10 @@ h2 {
   font-weight: 100 !important;
 }
 
+.app-body {
+  min-height: 100vh;
+}
+
 /* .app-body {
   display: flex;
   flex-direction: column;
