@@ -189,3 +189,7 @@ h2 {
     width: 100%;
   }
 }
+
+.bp3-control.bp3-switch input:checked~.bp3-control-indicator{
+  background-color: #00b0ff;
+}
