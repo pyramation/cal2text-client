@@ -38,7 +38,7 @@ export const SelectCalendars = ({
       })}
       </div>
       <br />
-      <Button onClick={doneChoosingCalendars} intent={"primary"}>
+      <Button onClick={doneChoosingCalendars} large intent={"primary"}>
         Done
       </Button>
     </div>
