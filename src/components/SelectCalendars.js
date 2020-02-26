@@ -33,13 +33,13 @@ export const SelectCalendars = ({
       <div >
       {calendars.map(calendar=>{
         return (
-          <Switch labelElement={calendar.summary} checked={isSelected(calendar)} onClick={()=>handleCalendarSelect(calendar)}/>
+          <Switch labelElement={calendar.summary} checked={isSelected(calendar)}  onClick={()=>handleCalendarSelect(calendar)}/>
         );
       })}
       </div>
       <br />
-      <Button onClick={doneChoosingCalendars} intent={"primary"} large className={"stupid-button"}>
-        &nbsp;Done&nbsp;
+      <Button onClick={doneChoosingCalendars} intent={"primary"}>
+        Done
       </Button>
     </div>
   );
