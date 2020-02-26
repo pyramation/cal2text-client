@@ -74,7 +74,7 @@ export const SelectCalendars = ({
     <div className="calendar-select">
       <img src={calendarIcon} alt="calendar" />
       <br />
-      <h1>Which calendars determine your schedule?</h1>
+      <h1>Which calendars set your schedule?</h1>
       <br />
       <MultiSelect
         itemRenderer={renderItem}
