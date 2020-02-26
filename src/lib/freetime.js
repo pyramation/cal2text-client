@@ -196,14 +196,16 @@ export const freeToEnglish = (segments, timezoneString) => {
 };
 
 export const apiResponseToFree = (apiResponse, start, end, timezoneString) => {
-  return freeToEnglish(
-    getFreetime({
-      segments: flattenSegments(mergeCalendars(apiResponse.calendars)),
-      start,
-      end
-    }),
-    timezoneString
+  const freeTime = getFreetime({
+    segments: flattenSegments(mergeCalendars(apiResponse.calendars)),
+    start,
+    end
+  }).filter(
+    ({ start, end }) =>
+      DateTime.fromISO(start).toSeconds() !== DateTime.fromISO(end).toSeconds()
   );
+  console.log(freeTime, "freetime");
+  return freeToEnglish(freeTime, timezoneString);
 };
 
 export const getEachDayBusyTimes = ({
@@ -238,14 +240,18 @@ export const getDaysFreeSummaryText = ({
     days,
     calendarIds
   }).then(dayResults => {
-    const result = dayResults.map(({ result: dayResult, start, end }) => {
-      const dayFreeTime = apiResponseToFree(dayResult, start, end, timezone);
+    const result = dayResults
+      .map(({ result: dayResult, start, end }) => {
+        const dayFreeTime = apiResponseToFree(dayResult, start, end, timezone);
 
-      const day = DateTime.fromISO(start);
-      const dayName = day.weekdayShort;
-      const monthDay = day.day;
-      return `${dayName} ${ordinal(monthDay)}: ${dayFreeTime}`;
-    });
+        const day = DateTime.fromISO(start);
+        const dayName = day.weekdayShort;
+        const monthDay = day.day;
+        return dayFreeTime
+          ? `${dayName} ${ordinal(monthDay)}: ${dayFreeTime}`
+          : null;
+      })
+      .filter(i => i);
     return result;
   });
 };
