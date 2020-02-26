@@ -15,7 +15,7 @@ const Landing = ({ signIn }) => {
           "* Wed 26th: 9am to 11:30am, 12:30pm\n" +
           "to 3:30pm, 4pm to 5pm\n" +
           "* Thu 27th: 9am to 11:30am, 12pm to 5pm\n" +
-          "* Fri 28th: 9am to 9am, 1:27pm to 5pm\n"}
+          "* Fri 28th: 9am to 10am, 1:30pm to 5pm\n"}
       </pre>
       <Button onClick={signIn} intent={"primary"} large>
         Start Scheduling Now
