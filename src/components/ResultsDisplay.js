@@ -44,7 +44,6 @@ class AutofocusTextarea extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("trying to focus");
     this._input.focus();
   }
 
