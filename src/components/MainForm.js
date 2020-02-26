@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { TimePicker } from "@blueprintjs/datetime";
 import { Button, NumericInput, Position } from "@blueprintjs/core";
 import { TimezonePicker, TimezoneDisplayFormat } from "@blueprintjs/timezone";
+
+import { DateTime } from "luxon";
 
 import ResultsDisplay from "./ResultsDisplay";
 
@@ -24,19 +26,16 @@ const jsNumericInputFormatter = {
 };
 
 const MainForm = ({
-  dayStartTime,
-  setDayStartTime,
-  dayEndTime,
-  setDayEndTime,
-  daysToGet,
-  setDaysToGet,
-  timezone,
-  setTimezone,
   results,
   resultsFetching,
   getFreeSummary,
   notFinishedChoosingCalendars
 }) => {
+  const [days, setDays] = useState(3);
+  const [dayStartTime, setDayStartTime] = useState(new Date(2020, 5, 5, 9));
+  const [dayEndTime, setDayEndTime] = useState(new Date(2020, 5, 5, 17));
+  const [timezone, setTimezone] = useState(DateTime.local().zoneName);
+
   return (
     <div className="calendar-mainform">
       <div className="word">Find my free time between</div>
@@ -56,14 +55,15 @@ const MainForm = ({
       <div className="days-chooser">
         <div className="word"> for the next </div>
         <input
+          name="days"
           className="get-days-input"
           type="number"
-          value={daysToGet}
+          value={days}
           onChange={e => {
-            setDaysToGet(e.target.value);
+            setDays(e.target.value);
           }}
         ></input>
-        <div className="word">{daysToGet > 1 ? "days" : "day"}</div>
+        <div className="word">{days > 1 ? "days" : "day"}</div>
       </div>
       <div className="timezone-chooser">
         <div className="word">displayed in </div>
@@ -78,7 +78,9 @@ const MainForm = ({
       </div>
       <div className="gettimes-buttons">
         <Button
-          onClick={getFreeSummary}
+          onClick={() =>
+            getFreeSummary(days, dayStartTime, dayEndTime, timezone)
+          }
           icon="timeline-events"
           text="Get Times"
           large

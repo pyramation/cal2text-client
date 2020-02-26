@@ -11,20 +11,35 @@ import Layout from "../components/Layout";
 import Landing from "../components/Landing";
 import MainForm from "../components/MainForm";
 
+const PageLayout = ({
+  children,
+  signUserOut,
+  signIn,
+  signedIn,
+  setCalendarsChosen,
+  calendarsChosen
+}) => {
+  return (
+    <Layout
+      signOut={signUserOut}
+      signIn={signIn}
+      signedIn={signedIn}
+      setCalendarsChosen={setCalendarsChosen}
+      calendarsChosen={calendarsChosen}
+    >
+      {children}
+    </Layout>
+  );
+};
+
 const Index = () => {
   const [apiReady, setApiReady] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
-  const [getTimes, setGetTimes] = useState(false);
 
   const [calendars, setCalendars] = useState([]);
   const [calendarsToQuery, setCalendarsToQuery] = useState([]);
   const [calendarsFetched, setCalendarsFetched] = useState(false);
   const [calendarsChosen, setCalendarsChosen] = useState(false);
-
-  const [daysToGet, setDaysToGet] = useState(3);
-  const [dayStartTime, setDayStartTime] = useState(new Date(2020, 5, 5, 9));
-  const [dayEndTime, setDayEndTime] = useState(new Date(2020, 5, 5, 17));
-  const [timezone, setTimezone] = useState(DateTime.local().zoneName);
 
   const [results, setResults] = useState(null);
   const [resultsFetching, setResultsFetching] = useState(false);
@@ -33,7 +48,6 @@ const Index = () => {
     signOut();
 
     setSignedIn(false);
-    setGetTimes(false);
 
     setCalendars([]);
     setCalendarsToQuery([]);
@@ -44,12 +58,12 @@ const Index = () => {
     setResults(null);
   };
 
-  const getFreeSummary = () => {
+  const getFreeSummary = (days, dayStartTime, dayEndTime, timezone) => {
     setResultsFetching(true);
     getDaysFreeSummaryText({
       startHour: dayStartTime.getHours(),
       endHour: dayEndTime.getHours(),
-      days: daysToGet,
+      days,
       calendarIds: calendarsToQuery.map(c => c.id),
       timezone
     }).then(result => {
@@ -65,24 +79,16 @@ const Index = () => {
     setCalendarsChosen(false);
   };
 
-  const PageLayout = ({ children }) => {
+  if (!apiReady) {
+    loadApi({ setSignedIn, setApiReady });
     return (
-      <Layout
-        signOut={signUserOut}
+      <PageLayout
+        signUserOut={signUserOut}
         signIn={signIn}
         signedIn={signedIn}
         setCalendarsChosen={setCalendarsChosen}
         calendarsChosen={calendarsChosen}
       >
-        {children}
-      </Layout>
-    );
-  };
-
-  if (!apiReady) {
-    loadApi({ setSignedIn, setApiReady });
-    return (
-      <PageLayout>
         <div className="loader">Loading API...</div>
       </PageLayout>
     );
@@ -90,7 +96,13 @@ const Index = () => {
 
   if (!signedIn) {
     return (
-      <PageLayout>
+      <PageLayout
+        signUserOut={signUserOut}
+        signIn={signIn}
+        signedIn={signedIn}
+        setCalendarsChosen={setCalendarsChosen}
+        calendarsChosen={calendarsChosen}
+      >
         <Landing signIn={signIn} />
       </PageLayout>
     );
@@ -103,7 +115,13 @@ const Index = () => {
       setCalendarsFetched(true);
     });
     return (
-      <PageLayout>
+      <PageLayout
+        signUserOut={signUserOut}
+        signIn={signIn}
+        signedIn={signedIn}
+        setCalendarsChosen={setCalendarsChosen}
+        calendarsChosen={calendarsChosen}
+      >
         <div className="loader">Feching calendars...</div>
       </PageLayout>
     );
@@ -111,7 +129,13 @@ const Index = () => {
 
   if (!calendarsChosen) {
     return (
-      <PageLayout>
+      <PageLayout
+        signUserOut={signUserOut}
+        signIn={signIn}
+        signedIn={signedIn}
+        setCalendarsChosen={setCalendarsChosen}
+        calendarsChosen={calendarsChosen}
+      >
         <SelectCalendars
           calendars={calendars}
           selected={calendarsToQuery}
@@ -123,16 +147,14 @@ const Index = () => {
   }
 
   return (
-    <PageLayout>
+    <PageLayout
+      signUserOut={signUserOut}
+      signIn={signIn}
+      signedIn={signedIn}
+      setCalendarsChosen={setCalendarsChosen}
+      calendarsChosen={calendarsChosen}
+    >
       <MainForm
-        dayStartTime={dayStartTime}
-        setDayStartTime={setDayStartTime}
-        dayEndTime={dayEndTime}
-        setDayEndTime={setDayEndTime}
-        daysToGet={daysToGet}
-        setDaysToGet={setDaysToGet}
-        timezone={timezone}
-        setTimezone={setTimezone}
         results={results}
         resultsFetching={resultsFetching}
         getFreeSummary={getFreeSummary}
