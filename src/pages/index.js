@@ -44,7 +44,13 @@ const Index = () => {
     setResults(null);
   };
 
+  const logUserEvent = () => {
+    window.ga && window.ga('send', 'event', 'get-summary', 'click');
+  }
+
   const getFreeSummary = () => {
+    logUserEvent();
+
     setResultsFetching(true);
     getDaysFreeSummaryText({
       startHour: dayStartTime.getHours(),
