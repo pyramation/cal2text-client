@@ -5,7 +5,7 @@ import landingImage from "../assets/landing.svg";
 const Landing = ({ signIn }) => {
   return (
     <div className="calendar-landing">
-      <h1>Add a human touch to your automated scheduling</h1>
+      <h1>Summarize your availability in seconds</h1>
       <h2>
         Get available times in human readable text without sending impersonal
         calendar links

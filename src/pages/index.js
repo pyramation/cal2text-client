@@ -8,27 +8,6 @@ import Layout from "../components/Layout";
 import Landing from "../components/Landing";
 import MainForm from "../components/MainForm";
 
-const PageLayout = ({
-  children,
-  signUserOut,
-  signIn,
-  signedIn,
-  setCalendarsChosen,
-  calendarsChosen
-}) => {
-  return (
-    <Layout
-      signOut={signUserOut}
-      signIn={signIn}
-      signedIn={signedIn}
-      setCalendarsChosen={setCalendarsChosen}
-      calendarsChosen={calendarsChosen}
-    >
-      {children}
-    </Layout>
-  );
-};
-
 const Index = () => {
   const [apiReady, setApiReady] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
@@ -80,29 +59,29 @@ const Index = () => {
   if (!apiReady) {
     loadApi({ setSignedIn, setApiReady });
     return (
-      <PageLayout
-        signUserOut={signUserOut}
+      <Layout
+        signOut={signUserOut}
         signIn={signIn}
         signedIn={signedIn}
         setCalendarsChosen={setCalendarsChosen}
         calendarsChosen={calendarsChosen}
       >
         <div className="loader">Loading API...</div>
-      </PageLayout>
+      </Layout>
     );
   }
 
   if (!signedIn) {
     return (
-      <PageLayout
-        signUserOut={signUserOut}
+      <Layout
+        signOut={signUserOut}
         signIn={signIn}
         signedIn={signedIn}
         setCalendarsChosen={setCalendarsChosen}
         calendarsChosen={calendarsChosen}
       >
         <Landing signIn={signIn} />
-      </PageLayout>
+      </Layout>
     );
   }
 
@@ -113,22 +92,22 @@ const Index = () => {
       setCalendarsFetched(true);
     });
     return (
-      <PageLayout
-        signUserOut={signUserOut}
+      <Layout
+        signOut={signUserOut}
         signIn={signIn}
         signedIn={signedIn}
         setCalendarsChosen={setCalendarsChosen}
         calendarsChosen={calendarsChosen}
       >
         <div className="loader">Feching calendars...</div>
-      </PageLayout>
+      </Layout>
     );
   }
 
   if (!calendarsChosen) {
     return (
-      <PageLayout
-        signUserOut={signUserOut}
+      <Layout
+        signOut={signUserOut}
         signIn={signIn}
         signedIn={signedIn}
         setCalendarsChosen={setCalendarsChosen}
@@ -140,13 +119,13 @@ const Index = () => {
           setSelected={setCalendarsToQuery}
           doneChoosingCalendars={doneChoosingCalendars}
         />
-      </PageLayout>
+      </Layout>
     );
   }
 
   return (
-    <PageLayout
-      signUserOut={signUserOut}
+    <Layout
+      signOut={signUserOut}
       signIn={signIn}
       signedIn={signedIn}
       setCalendarsChosen={setCalendarsChosen}
@@ -158,7 +137,7 @@ const Index = () => {
         getFreeSummary={getFreeSummary}
         notFinishedChoosingCalendars={notFinishedChoosingCalendars}
       />
-    </PageLayout>
+    </Layout>
   );
 };
 
