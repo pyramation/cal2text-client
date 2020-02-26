@@ -1,9 +1,14 @@
 import React from "react";
 import { Button, MenuItem, Icon } from "@blueprintjs/core";
 import { MultiSelect } from "@blueprintjs/select";
-import calendarIcon from '../assets/cal.png';
+import calendarIcon from "../assets/cal.png";
 
-export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosingCalendars }) => {
+export const SelectCalendars = ({
+  calendars,
+  selected,
+  setSelected,
+  doneChoosingCalendars
+}) => {
   const isSelected = item => selected.includes(item);
 
   const renderItem = (item, { modifiers, handleClick }) => {
@@ -30,9 +35,11 @@ export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosing
   const handleCalendarSelect = item => {
     if (selected.map(s => s.summary).includes(item.summary)) {
       setSelected(selected.filter(i => item.summary !== i.summary));
-      window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'remove calendar']);
+      window._gaq &&
+        window._gaq.push(["_trackEvent", "userAction", "remove calendar"]);
     } else {
-      window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'add calendar']);
+      window._gaq &&
+        window._gaq.push(["_trackEvent", "userAction", "add calendar"]);
       setSelected([...selected, item]);
     }
   };
@@ -49,8 +56,8 @@ export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosing
     calendars.length > 0 ? (
       <Button icon="cross" minimal={true} onClick={handleClear} />
     ) : (
-        undefined
-      );
+      undefined
+    );
 
   // TODO wtf does this even do
   const getTagProps = (_value, index) => {
@@ -67,10 +74,9 @@ export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosing
     <div className="calendar-select">
       <img src={calendarIcon} alt="calendar" />
       <br />
-      <h1>Choose all calendars you need to sync</h1>
+      <h1>Which calendars determine your schedule?</h1>
       <br />
       <MultiSelect
-
         itemRenderer={renderItem}
         items={calendars}
         noResults={<MenuItem disabled={true} text="No results." />}
@@ -80,7 +86,9 @@ export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosing
         tagInputProps={tagInputProps}
       />
       <br />
-      <Button onClick={doneChoosingCalendars} intent={'primary'} large>Done</Button>
+      <Button onClick={doneChoosingCalendars} intent={"primary"} large>
+        Done
+      </Button>
     </div>
   );
 };
