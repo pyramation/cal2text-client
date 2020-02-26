@@ -167,6 +167,11 @@ h2 {
   margin-right: 1em;
 }
 
+.get-days-input {
+  font-size: 1.8em;
+  width: 2em;
+}
+
 @media only screen and (max-width: 600px) {
   .timespan-chooser {
     flex-direction: column;
