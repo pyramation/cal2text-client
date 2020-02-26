@@ -50,7 +50,6 @@ class AutofocusTextarea extends React.Component {
 
   render() {
     const { results, timezone } = this.props;
-    console.log("yolo");
     return (
       <textarea
         ref={c => (this._input = c)}

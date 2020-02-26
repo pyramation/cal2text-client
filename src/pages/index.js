@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { Button } from "@blueprintjs/core";
-
-import { DateTime } from "luxon";
 
 import { signIn, signOut, listCalendars, loadApi } from "../lib/google";
 import { getDaysFreeSummaryText } from "../lib/freetime";
