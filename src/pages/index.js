@@ -35,7 +35,12 @@ const Index = () => {
   };
 
   const getFreeSummary = (days, dayStartTime, dayEndTime, timezone) => {
-    window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'Clicked through summary text']);
+    window._gaq &&
+      window._gaq.push([
+        "_trackEvent",
+        "userAction",
+        "Clicked through summary text"
+      ]);
     setResultsFetching(true);
     getDaysFreeSummaryText({
       startHour: dayStartTime.getHours(),
@@ -56,31 +61,20 @@ const Index = () => {
     setCalendarsChosen(false);
   };
 
-  if (!apiReady) {
-    loadApi({ setSignedIn, setApiReady });
-    return (
-      <Layout
-        signOut={signUserOut}
-        signIn={signIn}
-        signedIn={signedIn}
-        setCalendarsChosen={setCalendarsChosen}
-        calendarsChosen={calendarsChosen}
-      >
-        <div className="loader">Loading API...</div>
-      </Layout>
-    );
-  }
+  const doSignIn = () => {
+    loadApi({ setSignedIn, setApiReady: signIn });
+  };
 
   if (!signedIn) {
     return (
       <Layout
         signOut={signUserOut}
-        signIn={signIn}
+        signIn={doSignIn}
         signedIn={signedIn}
         setCalendarsChosen={setCalendarsChosen}
         calendarsChosen={calendarsChosen}
       >
-        <Landing signIn={signIn} />
+        <Landing signIn={doSignIn} />
       </Layout>
     );
   }
