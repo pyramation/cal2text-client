@@ -56,6 +56,7 @@ const Index = () => {
   };
 
   const getFreeSummary = (days, dayStartTime, dayEndTime, timezone) => {
+    window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'Clicked through summary text']);
     setResultsFetching(true);
     getDaysFreeSummaryText({
       startHour: dayStartTime.getHours(),
