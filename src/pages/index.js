@@ -44,12 +44,8 @@ const Index = () => {
     setResults(null);
   };
 
-  const logUserEvent = () => {
-    window.ga && window.ga('send', 'event', 'get-summary', 'click');
-  }
-
   const getFreeSummary = () => {
-    logUserEvent();
+    window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'Clicked through summary text']);
 
     setResultsFetching(true);
     getDaysFreeSummaryText({
