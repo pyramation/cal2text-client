@@ -30,7 +30,9 @@ export const SelectCalendars = ({ calendars, selected, setSelected, doneChoosing
   const handleCalendarSelect = item => {
     if (selected.map(s => s.summary).includes(item.summary)) {
       setSelected(selected.filter(i => item.summary !== i.summary));
+      window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'remove calendar']);
     } else {
+      window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'add calendar']);
       setSelected([...selected, item]);
     }
   };

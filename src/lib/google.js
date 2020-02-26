@@ -45,10 +45,13 @@ export function initClient({ setSignedIn, setApiReady }) {
 
 export const signIn = event => {
   window.gapi.auth2.getAuthInstance().signIn();
+  window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'user sign in']);
+  
 };
 
 export const signOut = event => {
   window.gapi.auth2.getAuthInstance().signOut();
+  window._gaq && window._gaq.push(['_trackEvent', 'userAction', 'user sign out']);
 };
 
 export const getBusyTimes = ({ timeMin, timeMax, calendarIds }) => {
